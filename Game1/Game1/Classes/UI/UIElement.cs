@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame;
 
-namespace Game1.Classes.UI
+namespace aedit.Classes.UI
 {
     public delegate void MousePressedCallback(Vector2 pos, Object whatever);
     abstract public class UIElement
@@ -140,7 +140,7 @@ namespace Game1.Classes.UI
                 {
                     tex[i] = 255;
                 }
-                whitePixel = new Texture2D(Game1.root.GraphicsDevice, 1, 1);
+                whitePixel = new Texture2D(aedit3.root.GraphicsDevice, 1, 1);
                 whitePixel.SetData<byte>(tex);
             }
         }

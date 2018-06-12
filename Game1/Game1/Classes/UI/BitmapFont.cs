@@ -8,16 +8,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame;
 
-namespace Game1.Classes.UI
+namespace aedit.Classes.UI
 {
     class BitmapFont
     {
         Texture2D tex;
         byte[] charWidthData;
+        int tilesize;
         public BitmapFont()
         {
-            tex = Game1.root.Content.Load<Texture2D>("font");
-            int tilesize = 8;
+            tex = aedit3.root.Content.Load<Texture2D>("font");
+            tilesize = 8;
             int width = tex.Width;
             int numtiles = (int)Math.Pow((width / tilesize), 2);
             byte[] data = new byte[tex.Width * tex.Height * 4];
@@ -39,9 +40,16 @@ namespace Game1.Classes.UI
                     }
                 Console.Write("\n");
                 }
-                charWidthData[i] = charWidth;
+                charWidthData[i] = (byte)(charWidth +2);
                 Console.Write("\n");
             }
+        }
+        public Rectangle getSrcRect(char _c)
+        {
+            int c = _c-1;
+            Point p = getTileOffset(c, tilesize, tex);
+            return new Rectangle(p.X,p.Y, charWidthData[c], 8);
+
         }
         Point getTileOffset(int tile, int tilesize, Texture2D tex)
         {
@@ -58,11 +66,29 @@ namespace Game1.Classes.UI
         
         public int GetWidth(char c)
         {
-            return 0;
+            return charWidthData[c - 1];
         }
-        public void DrawChar(char c, Vector2 pos)
+        public void DrawString(string _c, Vector2 pos, SpriteBatch b, float depth)
         {
-
+            Vector2 offset = Vector2.Zero;
+            char[] c = _c.ToArray<char>();
+            for(int i=0; i<c.Length; i++)
+            {
+                DrawChar(c[i], pos + offset, b, depth);
+                offset.X += GetWidth(c[i]);
+            }
+        }
+        public void DrawChar(char c, Vector2 pos, SpriteBatch b, float depth)
+        {
+            b.Draw(tex,
+                            pos,
+                            getSrcRect(c),
+                            Color.White,
+                            0,
+                            Vector2.Zero,
+                            new Vector2(1, 1),
+                            SpriteEffects.None,
+                            0.5f);
         }
     }
 }

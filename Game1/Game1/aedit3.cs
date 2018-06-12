@@ -1,19 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Game1.Classes.UI;
-namespace Game1
+using aedit.Classes.UI;
+namespace aedit
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class aedit3 : Game
     {
-        public static Game1 root;
+        public static aedit3 root;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        BitmapFont b;
 
-        public Game1()
+        public aedit3()
         {
             root = this;
             graphics = new GraphicsDeviceManager(this);
@@ -43,7 +44,7 @@ namespace Game1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game conte
-            BitmapFont f = new BitmapFont();
+            b = new BitmapFont();
         }
 
         /// <summary>
@@ -77,7 +78,9 @@ namespace Game1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin();
+            b.DrawString("sigh", new Vector2(0, 0),spriteBatch,0.5f);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
