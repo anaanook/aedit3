@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Game1.Classes.UI;
 namespace Game1
 {
     /// <summary>
@@ -9,11 +9,13 @@ namespace Game1
     /// </summary>
     public class Game1 : Game
     {
+        public static Game1 root;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public Game1()
         {
+            root = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -40,7 +42,8 @@ namespace Game1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // TODO: use this.Content to load your game conte
+            BitmapFont f = new BitmapFont();
         }
 
         /// <summary>
