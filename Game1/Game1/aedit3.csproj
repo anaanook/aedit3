@@ -59,7 +59,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classes\Core\ImageProcessor.cs" />
     <Compile Include="Classes\UI\BitmapFont.cs" />
+    <Compile Include="Classes\UI\FontManager.cs" />
+    <Compile Include="Classes\UI\UIButton.cs" />
     <Compile Include="Classes\UI\UIElement.cs" />
     <Compile Include="aedit3.cs" />
     <Compile Include="Classes\UI\UIManager.cs" />

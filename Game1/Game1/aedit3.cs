@@ -48,7 +48,8 @@ namespace aedit
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game conte
-            b = new BitmapFont();
+            FontManager.Init();
+            b = FontManager.UIFont;
             manager = new UIManager();
         }
 

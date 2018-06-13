@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame;
+using static aedit.Classes.Core.ImageProcessor;
 
 namespace aedit.Classes.UI
 {
@@ -15,15 +16,17 @@ namespace aedit.Classes.UI
         Texture2D tex;
         byte[] charWidthData;
         int tilesize;
-        public BitmapFont()
+        public BitmapFont(String _font, int _tilesize)
         {
-            tex = aedit3.root.Content.Load<Texture2D>("font");
-            tilesize = 8;
+            tex = aedit3.root.Content.Load<Texture2D>(_font);
+            AlphaKey(tex,new Color(0,0,0));
+            tilesize = _tilesize;
             int width = tex.Width;
             int numtiles = (int)Math.Pow((width / tilesize), 2);
             byte[] data = new byte[tex.Width * tex.Height * 4];
             charWidthData = new byte[width * width / tilesize];
             tex.GetData<byte>(data);
+            Console.WriteLine("starting bitmapfont");
             for (int i = 0; i < numtiles; i++)
             {
                 Point tileOfs = getTileOffset(i, 8, tex);
@@ -36,13 +39,11 @@ namespace aedit.Classes.UI
                         {
                             charWidth = (byte)x;
                         }
-                    Console.Write(piss);
                     }
-                Console.Write("\n");
                 }
                 charWidthData[i] = (byte)(charWidth +2);
-                Console.Write("\n");
             }
+            Console.WriteLine("finished");
         }
         public Rectangle getSrcRect(char _c)
         {

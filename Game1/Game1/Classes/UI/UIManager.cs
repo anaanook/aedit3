@@ -14,6 +14,13 @@ namespace aedit.Classes.UI
         MouseState oldMouseState;
         MouseState currentMouseState;
         public static UIManager root;
+        public Vector2 mousePos
+        {
+            get
+            {
+                return new Vector2(currentMouseState.X / 2, currentMouseState.Y / 2);
+            }
+        }
         public override Vector2 size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public UIManager()
@@ -24,6 +31,7 @@ namespace aedit.Classes.UI
                 UIWindow test = new UIWindow(new Vector2(10+i*30, 10 + i * 30), new Vector2(64, 50));
                 AddChild(test);
             }
+            Sort();
         }
         public int WindowCompare(UIElement x, UIElement y)
         {
@@ -64,7 +72,6 @@ namespace aedit.Classes.UI
                 }
             }
 
-            Sort();
             base.Update();
             oldMouseState = currentMouseState;
             

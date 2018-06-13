@@ -155,7 +155,7 @@ namespace aedit.Classes.UI
                             Vector2.Zero,
                             size,
                             SpriteEffects.None,
-                            0.5f);
+                            0f);
         }
         public static void DebugDrawRect(SpriteBatch b, Vector2 pos, Vector2 size, Color c)
         {
@@ -174,7 +174,7 @@ namespace aedit.Classes.UI
                             Vector2.Zero,
                             new Vector2(1, size.Y),
                             SpriteEffects.None,
-                            0.5f);
+                            0f);
                     }
                     if (i == 1)
                     {
@@ -186,7 +186,7 @@ namespace aedit.Classes.UI
                             Vector2.Zero,
                             new Vector2(size.X, 1),
                             SpriteEffects.None,
-                            0.5f);
+                            0f);
                     }
                 }
             }

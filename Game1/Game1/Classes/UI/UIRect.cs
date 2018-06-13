@@ -11,8 +11,20 @@ using static aedit.aedit3;
 
 namespace aedit.Classes.UI
 {
-    class UIRect :UIElement
+    struct UIRectDefinition
     {
+        public String tex;
+        public Rectangle srcrect;
+        public Point cornerSize;
+    }
+    class UIRect : UIElement
+    {
+        public static UIRectDefinition def = new UIRectDefinition()
+        {
+            tex = "ui",
+            srcrect = new Rectangle(8, 16, 32, 32),
+            cornerSize = new Point(10, 10)
+        };
         override public Vector2 size
         {
             get; set;
@@ -22,7 +34,15 @@ namespace aedit.Classes.UI
         Rectangle[] srcRects;
         Vector2[] dstPositions;
         Point cornerSize;
+        public UIRect(UIRectDefinition _definition, Vector2 _position, Vector2 _size)
+        {
+            Setup(_definition.tex, _position, _size, _definition.srcrect, _definition.cornerSize);
+        }
         public UIRect(string _tex, Vector2 _position, Vector2 _size, Rectangle _srcrect, Point _cornerSize )
+        {
+            Setup(_tex, _position, _size, _srcrect, _cornerSize);
+        }
+        void Setup(string _tex, Vector2 _position, Vector2 _size, Rectangle _srcrect, Point _cornerSize)
         {
             tex = root.Content.Load<Texture2D>(_tex);
             position = _position;
@@ -32,11 +52,11 @@ namespace aedit.Classes.UI
             srcRects = new Rectangle[9];
             dstPositions = new Vector2[9];
 
-            if(size.X < cornerSize.X * 2)
+            if (size.X < cornerSize.X * 2)
             {
                 cornerSize.X = (int)Math.Ceiling(size.X / 2.0f);
             }
-            if (size.Y< cornerSize.Y * 2)
+            if (size.Y < cornerSize.Y * 2)
             {
                 cornerSize.Y = (int)Math.Ceiling(size.Y / 2.0f);
             }
