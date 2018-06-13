@@ -7,9 +7,9 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6E31FE96-D285-4606-90F7-DA86C5054B74}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>aedit3</RootNamespace>
+    <RootNamespace>aedit</RootNamespace>
     <AssemblyName>aedit3</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
@@ -62,6 +62,9 @@
     <Compile Include="Classes\UI\BitmapFont.cs" />
     <Compile Include="Classes\UI\UIElement.cs" />
     <Compile Include="aedit3.cs" />
+    <Compile Include="Classes\UI\UIManager.cs" />
+    <Compile Include="Classes\UI\UIRect.cs" />
+    <Compile Include="Classes\UI\UIWindow.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

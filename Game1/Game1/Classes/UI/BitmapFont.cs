@@ -88,7 +88,7 @@ namespace aedit.Classes.UI
                             Vector2.Zero,
                             new Vector2(1, 1),
                             SpriteEffects.None,
-                            0.5f);
+                            depth);
         }
     }
 }

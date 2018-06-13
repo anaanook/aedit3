@@ -12,12 +12,16 @@ namespace aedit
         public static aedit3 root;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        UIManager manager;
         BitmapFont b;
 
         public aedit3()
         {
             root = this;
-            graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
+            };
             Content.RootDirectory = "Content";
         }
 
@@ -45,6 +49,7 @@ namespace aedit
 
             // TODO: use this.Content to load your game conte
             b = new BitmapFont();
+            manager = new UIManager();
         }
 
         /// <summary>
@@ -67,7 +72,7 @@ namespace aedit
                 Exit();
 
             // TODO: Add your update logic here
-
+            manager.Update();
             base.Update(gameTime);
         }
 
@@ -78,8 +83,14 @@ namespace aedit
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
-            b.DrawString("sigh", new Vector2(0, 0),spriteBatch,0.5f);
+            spriteBatch.Begin(SpriteSortMode.BackToFront,null,null,DepthStencilState.Default,null,null,Matrix.CreateScale(2,2,1));
+            MouseState m = Mouse.GetState();
+
+            Vector2 mouse = new Vector2(m.Position.X/2, m.Position.Y/2);
+            b.DrawString("ugh",mouse,spriteBatch,0f);
+
+            manager.Draw(spriteBatch);
+
             spriteBatch.End();
             // TODO: Add your drawing code here
 
