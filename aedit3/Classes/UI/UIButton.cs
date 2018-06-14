@@ -35,6 +35,10 @@ namespace aedit.Classes.UI
         {
             Setup(ButtonType.Static, _position, _size, _tex, _srcRect, _pressedOffset, Point.Zero);
         }
+        public UIButton(Vector2 _position, Vector2 _size, String _tex, Rectangle _srcRect, Point _pressedOffset, Point _cornerSize)
+        {
+            Setup(ButtonType.Dynamic, _position, _size, _tex, _srcRect, _pressedOffset, _cornerSize);
+        }
         void Setup(ButtonType _type, Vector2 _position, Vector2 _size, String _tex, Rectangle _srcRect, Point _pressedOffset, Point _cornerSize)
         {
             type = _type;
@@ -54,6 +58,23 @@ namespace aedit.Classes.UI
                 AddChild(gfx[0]);
                 AddChild(gfx[1]);
             }
+            if(_type == ButtonType.Dynamic)
+            {
+                size = _size;
+                position = _position;
+                gfx = new UIElement[2];
+                gfx[0] = new UIRect("ui", Vector2.Zero, _size, _srcRect, _cornerSize);
+                gfx[1] = new UIRect("ui", Vector2.Zero, _size, new Rectangle(_srcRect.X + _pressedOffset.X, _srcRect.Y + _pressedOffset.Y, _srcRect.Width, _srcRect.Height), _cornerSize);
+                AddChild(gfx[0]);
+                AddChild(gfx[1]);
+            }
+        }
+        public void DefaultButtonCallback(Vector2 pos, Object piss)
+        {
+            if (root.isMousePressed() == 1)
+            {
+                state = UIButtonState.Pressed;
+            }
         }
         public override void Update()
         {
@@ -72,18 +93,15 @@ namespace aedit.Classes.UI
                     gfx[0].visible = true;
                 }
             }
-            
-
-            if (state == UIButtonState.Pressed && mouse == 3)
+            if(mouse==0 && state ==UIButtonState.Pressed)
             {
-                state =UIButtonState.Released;
+                state = UIButtonState.Released;
             }
-           
             base.Update();
         }
         public override void Draw(SpriteBatch b)
         {
-            //DebugDrawRect(b, globalPosition, size, Color.Red);
+            DebugDrawRect(b, globalPosition+hitboxOffset, size+hitboxPadding, Color.Red);
             base.Draw(b);
         }
     }

@@ -19,6 +19,8 @@ namespace aedit.Classes.UI
         public bool visible = true;
         public float depth = 0.01f;
         public MousePressedCallback mousePressedCallback = null;
+        public Vector2 hitboxPadding = new Vector2(4,4);
+        public Vector2 hitboxOffset = new Vector2(-2, -2);
         public float drawDepth
         {
             get
@@ -78,17 +80,22 @@ namespace aedit.Classes.UI
                 }
             }
         }
+        public void SetPadding(int pad)
+        {
+            hitboxOffset = new Vector2(-pad, -pad);
+            hitboxPadding = new Vector2(pad * 2, pad * 2);
+        }
         public bool HitTest(Vector2 pos)
         {
             if (visible)
             {
                 bool x = false;
                 bool y = false;
-                if (pos.X > globalPosition.X && pos.X < globalPosition.X + size.X)
+                if (pos.X > globalPosition.X+hitboxOffset.X && pos.X < globalPosition.X+ hitboxOffset.X + size.X + hitboxPadding.X)
                 {
                     x = true;
                 }
-                if (pos.Y > globalPosition.Y && pos.Y < globalPosition.Y + size.Y)
+                if (pos.Y > globalPosition.Y +hitboxOffset.Y && pos.Y < globalPosition.Y + hitboxOffset.Y + size.Y + hitboxPadding.Y)
                 {
                     y = true;
                 }

@@ -14,6 +14,7 @@ namespace aedit.Classes.UI
         UISprite mouseSprite;
         MouseState oldMouseState;
         MouseState currentMouseState;
+        public List<UIWindow> windows = new List<UIWindow>();
         public static UIManager root;
         public Vector2 mousePos
         {
@@ -39,7 +40,6 @@ namespace aedit.Classes.UI
             mouseSprite.depth = 1f;
             AddChild(mouseSprite);
             Sort();
-
         }
         public int WindowCompare(UIElement x, UIElement y)
         {
@@ -58,12 +58,11 @@ namespace aedit.Classes.UI
         }
         public void Sort()
         {
-            children.Sort(WindowCompare);
-            for(int i=0; i<children.Count; i++)
+            windows.Sort(WindowCompare);
+            for(int i=0; i< windows.Count; i++)
             {
-                children[i].depth = (i) / (float)children.Count * 0.5f;
+                windows[i].depth = (i) / (float)windows.Count * 0.5f;
             }
-            mouseSprite.depth = 1;
         }
         public override void Update()
         {
@@ -73,11 +72,11 @@ namespace aedit.Classes.UI
             mouseSprite.position = mousePos;
             if (isMousePressed() > 0)
             {
-                for (int i = 0; i < children.Count; i++)
+                for (int i = 0; i < windows.Count; i++)
                 {
-                    if (children[children.Count-i-1].HitTest(mousePos))
+                    if (windows[windows.Count-i-1].HitTest(mousePos))
                     {
-                        children[children.Count - i - 1].mousePressedCallback(mousePos, this);
+                        windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
                         break;
                     }
                 }
@@ -86,6 +85,14 @@ namespace aedit.Classes.UI
             base.Update();
             oldMouseState = currentMouseState;
             
+        }
+        public override void AddChild(UIElement child)
+        {
+            if (child.GetType() == typeof(UIWindow))
+            {
+                windows.Add((UIWindow)child);
+            }
+            base.AddChild(child);
         }
         public int isMousePressed()
         {

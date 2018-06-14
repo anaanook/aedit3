@@ -25,37 +25,53 @@ namespace aedit.Classes.UI
             set => throw new NotImplementedException();
         }
         UIWindowState state = UIWindowState.Neutral;
+        int mouse;
         Vector2 mouseOffset;
         UIRect bg;
         public UIWindow(Vector2 _position, Vector2 _size)
         {
+            SetPadding(0);
             position = _position;
             mousePressedCallback = mousePressed_func;
             bg = new UIRect(UIRect.def, Vector2.Zero, _size);
             AddChild(bg);
-            UIButton menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.size.X-8, 8));
+            UIButton menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.size.X-11, 8));
             menubar.mousePressedCallback = menuPressed_func;
             UIButton closeButton = new UIButton(new Vector2(bg.size.X-8, 0), new Vector2(8, 8),"ui",new Rectangle(48,8,8,8),new Point(8,0));
             closeButton.mousePressedCallback = closePressed_func;
             AddChild(menubar);
             AddChild(closeButton);
+            UIButton testButton = new UIButton(new Vector2(15, 15), new Vector2(20, 10), "ui", new Rectangle(48, 24, 16, 16), new Point(16,0), new Point (6,6));
+            AddChild(testButton);
+            testButton.mousePressedCallback = testButton.DefaultButtonCallback;
         }
         void closePressed_func(Vector2 pos, object obj)
         {
+            mouse = root.isMousePressed();
             UIButton but = (UIButton)obj;
-            but.state = UIButtonState.Pressed;
+            if (mouse == 1)
+            {
+                but.state = UIButtonState.Pressed;
+            }
+            else if (mouse == 3 && but.state == UIButtonState.Pressed){
+                visible = false;
+            }
         }
         void menuPressed_func(Vector2 pos, object obj)
         {
-            state = UIWindowState.Dragging;
-            mouseOffset = globalPosition - pos;
-            Console.WriteLine("succ");
+            mouse = root.isMousePressed();
+            if (mouse == 1)
+            {
+                state = UIWindowState.Dragging;
+                mouseOffset = globalPosition - pos;
+                Console.WriteLine("succ");
+            }
         }
         void mousePressed_func(Vector2 pos, object obj)
         {
-            int mouse = root.isMousePressed();
+            mouse = root.isMousePressed();
             Vector2 mousePos = root.mousePos;
-            if (mouse == 1)
+            if (mouse > 0)
             {
                 foreach(UIButton b in children.OfType<UIButton>())
                 {
@@ -64,13 +80,16 @@ namespace aedit.Classes.UI
                         b.mousePressedCallback(mousePos, b);
                     }
                 }
-                depth = 2;
-                root.Sort();
+                if (mouse == 1)
+                {
+                    depth = 2;
+                    root.Sort();
+                }
             }
         }
         public override void Update()
         {
-            int mouse = root.isMousePressed();
+            mouse = root.isMousePressed();
             Vector2 mousePos = root.mousePos;
             if (state == UIWindowState.Dragging)
             {

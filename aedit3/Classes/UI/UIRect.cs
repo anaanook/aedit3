@@ -103,6 +103,7 @@ namespace aedit.Classes.UI
         }
         override public void Draw(SpriteBatch b)
         {
+            if(visible)
             for(int i=0; i<srcRects.Length; i++)
             {
                     b.Draw(tex,
