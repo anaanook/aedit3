@@ -19,8 +19,31 @@ namespace aedit.Classes.UI
         Static,
         Dynamic
     }
+    struct UIButtonDef
+    {
+        public ButtonType type;
+        public Rectangle srcRect;
+        public Point pressedOffset;
+        public Point cornerSize;
+        public String tex;
+    }
     class UIButton : UIElement
     {
+        public static UIButtonDef Default_UIButton = new UIButtonDef
+        {
+            type = ButtonType.Dynamic,
+            srcRect = new Rectangle(56,56,16,16),
+            pressedOffset = new Point(0,16),
+            cornerSize = new Point(7,7),
+            tex = "ui"
+        };
+        public static UIButtonDef Default_CloseButton = new UIButtonDef
+        {
+            type = ButtonType.Static,
+            srcRect = new Rectangle(87, 56, 13, 13),
+            pressedOffset = new Point(12,0),
+            tex = "ui"
+        };
         public ButtonType type;
         public UIButtonState state;
         public UIElement[] gfx;
@@ -30,6 +53,10 @@ namespace aedit.Classes.UI
         public UIButton(Vector2 _position, Vector2 _size)
         {
             Setup(ButtonType.Invisible, _position, _size, null, Rectangle.Empty, Point.Zero, Point.Zero);
+        }
+        public UIButton(Vector2 _position, Vector2 _size, UIButtonDef _def)
+        {
+                Setup(_def.type, _position, _size, _def.tex, _def.srcRect, _def.pressedOffset, _def.cornerSize);
         }
         public UIButton(Vector2 _position, Vector2 _size, String _tex, Rectangle _srcRect, Point _pressedOffset)
         {
@@ -101,7 +128,7 @@ namespace aedit.Classes.UI
         }
         public override void Draw(SpriteBatch b)
         {
-            DebugDrawRect(b, globalPosition+hitboxOffset, size+hitboxPadding, Color.Red);
+            //DebugDrawRect(b, globalPosition+hitboxOffset, size+hitboxPadding, Color.Red);
             base.Draw(b);
         }
     }

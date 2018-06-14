@@ -83,11 +83,11 @@ namespace aedit
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Target | ClearOptions.Stencil,Color.Gray,1,0);
+            GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Target | ClearOptions.Stencil,Color.Green,1,0);
             spriteBatch.Begin(
                 SpriteSortMode.FrontToBack,
                 BlendState.AlphaBlend,
-                null,
+                SamplerState.PointWrap,
                 DepthStencilState.Default,
                 null,
                 null,

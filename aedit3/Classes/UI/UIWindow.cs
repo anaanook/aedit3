@@ -35,15 +35,17 @@ namespace aedit.Classes.UI
             mousePressedCallback = mousePressed_func;
             bg = new UIRect(UIRect.def, Vector2.Zero, _size);
             AddChild(bg);
-            UIButton menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.size.X-11, 8));
+            UIButton menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.size.X-15, 12));
             menubar.mousePressedCallback = menuPressed_func;
-            UIButton closeButton = new UIButton(new Vector2(bg.size.X-8, 0), new Vector2(8, 8),"ui",new Rectangle(48,8,8,8),new Point(8,0));
+            UIButton closeButton = new UIButton(new Vector2(bg.size.X-13, 0), new Vector2(12, 12),UIButton.Default_CloseButton);
             closeButton.mousePressedCallback = closePressed_func;
             AddChild(menubar);
             AddChild(closeButton);
-            UIButton testButton = new UIButton(new Vector2(15, 15), new Vector2(20, 10), "ui", new Rectangle(48, 24, 16, 16), new Point(16,0), new Point (6,6));
+            UIButton testButton = new UIButton(new Vector2(15, 15), new Vector2(40, 40),UIButton.Default_UIButton);
             AddChild(testButton);
             testButton.mousePressedCallback = testButton.DefaultButtonCallback;
+            UILabel testlabel = new UILabel("testlabel", new Vector2(15, 30), FontManager.UIFont, Color.White);
+            AddChild(testlabel);
         }
         void closePressed_func(Vector2 pos, object obj)
         {

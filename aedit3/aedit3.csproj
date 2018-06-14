@@ -67,6 +67,7 @@
     <Compile Include="Classes\UI\UIButton.cs" />
     <Compile Include="Classes\UI\UIElement.cs" />
     <Compile Include="aedit3.cs" />
+    <Compile Include="Classes\UI\UILabel.cs" />
     <Compile Include="Classes\UI\UIManager.cs" />
     <Compile Include="Classes\UI\UIRect.cs" />
     <Compile Include="Classes\UI\UISprite.cs" />

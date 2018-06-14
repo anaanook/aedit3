@@ -33,7 +33,7 @@ namespace aedit.Classes.UI
             AlphaKey(uitex, new Color(0, 255, 0));
             for (int i=0; i<5; i++)
             {
-                UIWindow test = new UIWindow(new Vector2(10+i*30, 10 + i * 30), new Vector2(64, 50));
+                UIWindow test = new UIWindow(new Vector2(10+i*30, 10 + i * 30), new Vector2(80, 120));
                 AddChild(test);
             }
             mouseSprite = new UISprite(Vector2.Zero, "ui", new Rectangle(32, 0, 6, 8));
@@ -78,6 +78,22 @@ namespace aedit.Classes.UI
                     {
                         windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
                         break;
+                    }
+                    else
+                    {
+                        bool result = false;
+                        foreach (UIButton b in windows[windows.Count - i - 1].children.OfType<UIButton>())
+                        {
+                            if (b.HitTest(mousePos))
+                            {
+                                result = true;
+                            }
+                        }
+                        if (result)
+                        {
+                            windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
+                            break;
+                        }
                     }
                 }
             }

@@ -22,8 +22,8 @@ namespace aedit.Classes.UI
         public static UIRectDefinition def = new UIRectDefinition()
         {
             tex = "ui",
-            srcrect = new Rectangle(8, 16, 32, 32),
-            cornerSize = new Point(10, 10)
+            srcrect = new Rectangle(8, 56, 33, 33),
+            cornerSize = new Point(12, 13)
         };
         override public Vector2 size
         {
@@ -44,6 +44,7 @@ namespace aedit.Classes.UI
         }
         void Setup(string _tex, Vector2 _position, Vector2 _size, Rectangle _srcrect, Point _cornerSize)
         {
+            depth = 0;
             tex = root.Content.Load<Texture2D>(_tex);
             position = _position;
             size = _size;
@@ -71,6 +72,7 @@ namespace aedit.Classes.UI
             dstPositions[2] = new Vector2(size.X - cornerSize.X, srcRects[2].Y - srcrect.Y) + position;
             dstPositions[3] = new Vector2(srcRects[3].X - srcrect.X, srcRects[3].Y - srcrect.Y) + position;
             dstPositions[4] = new Vector2(srcRects[4].X - srcrect.X, srcRects[4].Y - srcrect.Y) + position;
+
             dstPositions[5] = new Vector2(size.X - cornerSize.X, srcRects[5].Y - srcrect.Y) + position;
             dstPositions[6] = new Vector2(srcRects[6].X - srcrect.X, size.Y - cornerSize.Y) + position;
             dstPositions[7] = new Vector2(srcRects[7].X - srcrect.X, size.Y - cornerSize.Y) + position;
@@ -95,7 +97,7 @@ namespace aedit.Classes.UI
             srcRects[1] = new Rectangle(srcrect.X+cornerSize.X, srcrect.Y, srcrect.Width-cornerSize.X*2, cornerSize.Y);
             srcRects[2] = new Rectangle(srcrect.Right - cornerSize.X, srcrect.Y, cornerSize.X, cornerSize.Y);
             srcRects[3] = new Rectangle(srcrect.X, srcrect.Y+cornerSize.Y, cornerSize.X, srcrect.Height-cornerSize.Y*2);
-            srcRects[4] = new Rectangle(srcrect.X+cornerSize.X, srcrect.Y + cornerSize.Y, srcrect.Width - cornerSize.Y * 2, srcrect.Height - cornerSize.Y * 2);
+            srcRects[4] = new Rectangle(srcrect.X+cornerSize.X, srcrect.Y + cornerSize.Y, srcrect.Width - cornerSize.X * 2, srcrect.Height - cornerSize.Y * 2);
             srcRects[5] = new Rectangle(srcrect.Right - cornerSize.X, srcrect.Y + cornerSize.Y, cornerSize.X, srcrect.Height - cornerSize.Y * 2);
             srcRects[6] = new Rectangle(srcrect.X, srcrect.Bottom-cornerSize.Y, cornerSize.X, cornerSize.Y);
             srcRects[7] = new Rectangle(srcrect.X + cornerSize.X, srcrect.Bottom - cornerSize.Y, srcrect.Width - cornerSize.X * 2, cornerSize.Y);
