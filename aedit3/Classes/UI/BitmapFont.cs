@@ -46,6 +46,20 @@ namespace aedit.Classes.UI
             }
             Console.WriteLine("finished");
         }
+        public Vector2 getSize(String _s)
+        {
+            char[] c = _s.ToArray<char>();
+            Vector2 output = Vector2.Zero;
+            output.Y = tilesize;
+            for(int i = 0; i < c.Length; i++)
+            {
+                if (c[i] != '\n')
+                {
+                    output.X += GetWidth(c[i]);
+                }
+            }
+            return output;
+        }
         public Rectangle getSrcRect(char _c)
         {
             int c = _c - 1;

@@ -20,8 +20,6 @@ namespace aedit
         SpriteBatch spriteBatch;
         UIManager manager;
         BitmapFont b;
-        Effect shaderTest;
-        Texture2D testerr;
         public aedit3()
         {
             root = this;
@@ -59,15 +57,10 @@ namespace aedit
             // TODO: use this.Content to load your game conte
             FontManager.Init();
             b = FontManager.UIFont;
-            shaderTest = Content.Load<Effect>("shaders/shader_basic");
             manager = new UIManager();
 
             GraphicsDevice.SamplerStates[1] = SamplerState.PointWrap;
             
-            Texture2D t2 = Content.Load<Texture2D>("pallete");
-            shaderTest.Parameters["Palette"].SetValue(t2);
-
-            testerr = ImageProcessor.LoadBMP("palette.bmp");
             
         }
 
@@ -92,14 +85,6 @@ namespace aedit
 
             // TODO: Add your update logic here
             manager.Update();
-            base.Update(gameTime);
-            try
-            {
-                shaderTest.Parameters["Time"].SetValue(gameTime.TotalGameTime.Milliseconds / 1000.0f);
-            }
-            catch
-            {
-            }
         }
 
         /// <summary>
@@ -123,7 +108,7 @@ namespace aedit
                 );
 
             manager.Draw(spriteBatch);
-            spriteBatch.Draw(testerr, new Rectangle(200, 0, 100, 100), Color.White);
+
             spriteBatch.End();
             // TODO: Add your drawing code here
 

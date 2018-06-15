@@ -17,7 +17,8 @@ namespace aedit.Classes.UI
     {
         Invisible,
         Static,
-        Dynamic
+        Dynamic,
+        Label
     }
     struct UIButtonDef
     {
@@ -29,6 +30,14 @@ namespace aedit.Classes.UI
     }
     class UIButton : UIElement
     {
+        public static UIButtonDef Default_UILabelButton = new UIButtonDef
+        {
+            type = ButtonType.Label,
+            srcRect = new Rectangle(56, 56, 16, 16),
+            pressedOffset = new Point(0, 16),
+            cornerSize = new Point(7, 7),
+            tex = "ui"
+        };
         public static UIButtonDef Default_UIButton = new UIButtonDef
         {
             type = ButtonType.Dynamic,
@@ -40,10 +49,12 @@ namespace aedit.Classes.UI
         public static UIButtonDef Default_CloseButton = new UIButtonDef
         {
             type = ButtonType.Static,
-            srcRect = new Rectangle(87, 56, 13, 13),
+            srcRect = new Rectangle(87, 56, 13, 14),
             pressedOffset = new Point(12,0),
             tex = "ui"
         };
+        public UILabel label = null;
+        public Vector2 labelPosition;
         public ButtonType type;
         public UIButtonState state;
         public UIElement[] gfx;
@@ -54,9 +65,16 @@ namespace aedit.Classes.UI
         {
             Setup(ButtonType.Invisible, _position, _size, null, Rectangle.Empty, Point.Zero, Point.Zero);
         }
+        public UIButton(Vector2 _position, String _label, Vector2 _padding, BitmapFont _font, UIButtonDef _def)
+        {
+            Setup(_def.type, _position, _font.getSize(_label) + _padding * 2, _def.tex, _def.srcRect, _def.pressedOffset, _def.cornerSize);
+            label = new UILabel(_label, _padding + new Vector2(0, -2), _font, Color.White);
+            labelPosition = label.position;
+            AddChild(label);
+        }
         public UIButton(Vector2 _position, Vector2 _size, UIButtonDef _def)
         {
-                Setup(_def.type, _position, _size, _def.tex, _def.srcRect, _def.pressedOffset, _def.cornerSize);
+            Setup(_def.type, _position, _size, _def.tex, _def.srcRect, _def.pressedOffset, _def.cornerSize);
         }
         public UIButton(Vector2 _position, Vector2 _size, String _tex, Rectangle _srcRect, Point _pressedOffset)
         {
@@ -75,18 +93,7 @@ namespace aedit.Classes.UI
                 size = _size;
                 position = _position;
             }
-            if(_type == ButtonType.Static)
-            {
-                size = _size;
-                position = _position;
-                gfx = new UIElement[2];
-                gfx[0] = new UISprite(Vector2.Zero, _tex, _srcRect);
-                gfx[1] = new UISprite(Vector2.Zero, _tex, new Rectangle(_srcRect.X+_pressedOffset.X, _srcRect.Y+_pressedOffset.Y, _srcRect.Width, _srcRect.Height));
-                AddChild(gfx[0]);
-                AddChild(gfx[1]);
-            }
-            if(_type == ButtonType.Dynamic)
-            {
+            else { 
                 size = _size;
                 position = _position;
                 gfx = new UIElement[2];
@@ -113,11 +120,15 @@ namespace aedit.Classes.UI
                 {
                     gfx[0].visible = false;
                     gfx[1].visible = true;
+                    if (type == ButtonType.Label)
+                        label.position = labelPosition + new Vector2(0, 2);
                 }
                 else
                 {
                     gfx[1].visible = false;
                     gfx[0].visible = true;
+                    if (type == ButtonType.Label)
+                        label.position = labelPosition;
                 }
             }
             if(mouse==0 && state ==UIButtonState.Pressed)

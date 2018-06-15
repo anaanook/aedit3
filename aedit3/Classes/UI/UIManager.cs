@@ -41,6 +41,10 @@ namespace aedit.Classes.UI
             AddChild(mouseSprite);
             Sort();
         }
+        public void SetActiveTextInput(Vector2 pos, Object obj)
+        {
+
+        }
         public int WindowCompare(UIElement x, UIElement y)
         {
             if (x.depth > y.depth)

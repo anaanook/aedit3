@@ -29,7 +29,7 @@ namespace aedit.Classes.UI
         {
             if (visible)
             {
-
+               // DebugDrawRect(b, globalPosition, font.getSize(text), Color.Red);
                 font.DrawString(text, globalPosition, b, drawDepth, color);
                 if (dropShadow)
                 {

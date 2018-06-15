@@ -37,15 +37,19 @@ namespace aedit.Classes.UI
             AddChild(bg);
             UIButton menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.size.X-15, 12));
             menubar.mousePressedCallback = menuPressed_func;
-            UIButton closeButton = new UIButton(new Vector2(bg.size.X-13, 0), new Vector2(12, 12),UIButton.Default_CloseButton);
+            UIButton closeButton = new UIButton(new Vector2(bg.size.X-12, 0), new Vector2(12, 12),UIButton.Default_CloseButton);
             closeButton.mousePressedCallback = closePressed_func;
             AddChild(menubar);
             AddChild(closeButton);
-            UIButton testButton = new UIButton(new Vector2(15, 15), new Vector2(40, 40),UIButton.Default_UIButton);
-            AddChild(testButton);
-            testButton.mousePressedCallback = testButton.DefaultButtonCallback;
-            UILabel testlabel = new UILabel("testlabel", new Vector2(15, 30), FontManager.UIFont, Color.White);
-            AddChild(testlabel);
+            UILabel label = new UILabel("Window", new Vector2(10, 3), FontManager.UIFont, Color.White);
+            AddChild(label);
+            for (int i=0; i<4; i++)
+            {
+                UIButton testButton = new UIButton(new Vector2(16, 20+i*20), "test:"+i.ToString("X2"), new Vector2(5, 5), FontManager.UIFont, UIButton.Default_UILabelButton);
+                AddChild(testButton);
+                testButton.mousePressedCallback = testButton.DefaultButtonCallback;
+            }
+            
         }
         void closePressed_func(Vector2 pos, object obj)
         {
@@ -80,6 +84,7 @@ namespace aedit.Classes.UI
                     if (b.HitTest(mousePos) && b.mousePressedCallback!=null)
                     {
                         b.mousePressedCallback(mousePos, b);
+                        break;
                     }
                 }
                 if (mouse == 1)
