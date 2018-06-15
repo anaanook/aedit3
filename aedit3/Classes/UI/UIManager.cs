@@ -11,6 +11,7 @@ namespace aedit.Classes.UI
 {
     class UIManager : UIElement
     {
+        public UITextInput activeTextInput;
         UISprite mouseSprite;
         MouseState oldMouseState;
         MouseState currentMouseState;
@@ -23,7 +24,7 @@ namespace aedit.Classes.UI
                 return new Vector2(currentMouseState.X / 2, currentMouseState.Y / 2);
             }
         }
-        public override Vector2 size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override Vector2 Size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public UIManager()
         {
@@ -41,10 +42,9 @@ namespace aedit.Classes.UI
             AddChild(mouseSprite);
             Sort();
         }
-        public void SetActiveTextInput(Vector2 pos, Object obj)
-        {
 
-        }
+      
+
         public int WindowCompare(UIElement x, UIElement y)
         {
             if (x.depth > y.depth)

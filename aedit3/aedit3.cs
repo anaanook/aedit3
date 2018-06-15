@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using aedit.Classes.UI;
 using aedit.Classes.Core;
+using aedit.Classes.Ex;
+
 namespace aedit
 {
     /// <summary>
@@ -16,10 +18,11 @@ namespace aedit
     public class aedit3 : Game
     {
         public static aedit3 root;
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         UIManager manager;
         BitmapFont b;
+        Starfield Starfield;
         public aedit3()
         {
             root = this;
@@ -60,7 +63,7 @@ namespace aedit
             manager = new UIManager();
 
             GraphicsDevice.SamplerStates[1] = SamplerState.PointWrap;
-            
+            Starfield = new Starfield();
             
         }
 
@@ -85,6 +88,7 @@ namespace aedit
 
             // TODO: Add your update logic here
             manager.Update();
+            Starfield.Update(gameTime);
         }
 
         /// <summary>
@@ -93,7 +97,7 @@ namespace aedit
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Target | ClearOptions.Stencil,Color.Green,1,0);
+            GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Target | ClearOptions.Stencil,Color.Black,1,0);
 
 
 
@@ -109,6 +113,7 @@ namespace aedit
 
             manager.Draw(spriteBatch);
 
+            Starfield.Draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

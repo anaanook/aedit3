@@ -10,7 +10,7 @@ namespace aedit.Classes.UI
 {
     class UISprite : UIElement
     {
-        public override Vector2 size { get; set; }
+        public override Vector2 Size { get; set; }
         Texture2D tex;
         Rectangle srcRect;
         public UISprite(Vector2 _position, String _tex, Rectangle _srcRect)
@@ -23,14 +23,14 @@ namespace aedit.Classes.UI
         {
             if(visible)
             b.Draw(tex,
-                         globalPosition,
+                         GlobalPosition,
                          srcRect,
                          Color.White,
                          0,
                          Vector2.Zero,
                          Vector2.One,
                          SpriteEffects.None,
-                         drawDepth);
+                         DrawDepth);
         }
     }
 }

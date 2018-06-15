@@ -15,10 +15,18 @@ namespace aedit.Classes.UI
         BitmapFont font;
         String text;
         Color color;
-        public override Vector2 size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        Color shadowColor;
+        public override Vector2 Size {
+            get {
+                return font.GetSize(text);
+            }
+            set {
+            }
+        }
         public UILabel(String _text, Vector2 _position, BitmapFont _font, Color _color)
         {
             dropShadow = true;
+            shadowColor = Color.Black;
             depth = 0.02f;
             text = _text;
             font = _font;
@@ -29,11 +37,10 @@ namespace aedit.Classes.UI
         {
             if (visible)
             {
-               // DebugDrawRect(b, globalPosition, font.getSize(text), Color.Red);
-                font.DrawString(text, globalPosition, b, drawDepth, color);
+                font.DrawString(text, GlobalPosition, b, DrawDepth, color);
                 if (dropShadow)
                 {
-                    font.DrawString(text, globalPosition+shadowDir, b, drawDepth-0.005f, Color.Black);
+                    font.DrawString(text, GlobalPosition+shadowDir, b, DrawDepth-0.005f, shadowColor);
                 }
             }
         }

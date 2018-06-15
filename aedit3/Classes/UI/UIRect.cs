@@ -25,7 +25,7 @@ namespace aedit.Classes.UI
             srcrect = new Rectangle(8, 56, 33, 33),
             cornerSize = new Point(12, 13)
         };
-        override public Vector2 size
+        override public Vector2 Size
         {
             get; set;
         }
@@ -47,19 +47,19 @@ namespace aedit.Classes.UI
             depth = 0;
             tex = root.Content.Load<Texture2D>(_tex);
             position = _position;
-            size = _size;
+            Size = _size;
             srcrect = _srcrect;
             cornerSize = _cornerSize;
             srcRects = new Rectangle[9];
             dstPositions = new Vector2[9];
 
-            if (size.X < cornerSize.X * 2)
+            if (Size.X < cornerSize.X * 2)
             {
-                cornerSize.X = (int)Math.Ceiling(size.X / 2.0f);
+                cornerSize.X = (int)Math.Ceiling(Size.X / 2.0f);
             }
-            if (size.Y < cornerSize.Y * 2)
+            if (Size.Y < cornerSize.Y * 2)
             {
-                cornerSize.Y = (int)Math.Ceiling(size.Y / 2.0f);
+                cornerSize.Y = (int)Math.Ceiling(Size.Y / 2.0f);
             }
 
             GenerateRects();
@@ -69,25 +69,25 @@ namespace aedit.Classes.UI
         {
             dstPositions[0] = new Vector2(srcRects[0].X - srcrect.X, srcRects[0].Y - srcrect.Y)+position;
             dstPositions[1] = new Vector2(srcRects[1].X - srcrect.X, srcRects[1].Y - srcrect.Y) + position;
-            dstPositions[2] = new Vector2(size.X - cornerSize.X, srcRects[2].Y - srcrect.Y) + position;
+            dstPositions[2] = new Vector2(Size.X - cornerSize.X, srcRects[2].Y - srcrect.Y) + position;
             dstPositions[3] = new Vector2(srcRects[3].X - srcrect.X, srcRects[3].Y - srcrect.Y) + position;
             dstPositions[4] = new Vector2(srcRects[4].X - srcrect.X, srcRects[4].Y - srcrect.Y) + position;
 
-            dstPositions[5] = new Vector2(size.X - cornerSize.X, srcRects[5].Y - srcrect.Y) + position;
-            dstPositions[6] = new Vector2(srcRects[6].X - srcrect.X, size.Y - cornerSize.Y) + position;
-            dstPositions[7] = new Vector2(srcRects[7].X - srcrect.X, size.Y - cornerSize.Y) + position;
-            dstPositions[8] = new Vector2(size.X - cornerSize.X, size.Y - cornerSize.Y) + position;
+            dstPositions[5] = new Vector2(Size.X - cornerSize.X, srcRects[5].Y - srcrect.Y) + position;
+            dstPositions[6] = new Vector2(srcRects[6].X - srcrect.X, Size.Y - cornerSize.Y) + position;
+            dstPositions[7] = new Vector2(srcRects[7].X - srcrect.X, Size.Y - cornerSize.Y) + position;
+            dstPositions[8] = new Vector2(Size.X - cornerSize.X, Size.Y - cornerSize.Y) + position;
         }
         Vector2 GetScale(int index)
         {
             Vector2 scale = Vector2.One;
             if(index == 1 || index == 4 || index == 7)// X AXIS SCALE
             {
-                scale.X =  ((size.X - cornerSize.X * 2)/ (float)(srcrect.Width - cornerSize.X * 2)) ;
+                scale.X =  ((Size.X - cornerSize.X * 2)/ (float)(srcrect.Width - cornerSize.X * 2)) ;
             }
             if(index == 3 || index == 4 || index == 5)
             {
-                scale.Y = ((size.Y - cornerSize.Y * 2) / (float)(srcrect.Width - cornerSize.Y * 2));
+                scale.Y = ((Size.Y - cornerSize.Y * 2) / (float)(srcrect.Height - cornerSize.Y * 2));
             }
             return scale;
         }
@@ -109,14 +109,14 @@ namespace aedit.Classes.UI
             for(int i=0; i<srcRects.Length; i++)
             {
                     b.Draw(tex,
-                          dstPositions[i]+globalPosition,
+                          dstPositions[i]+GlobalPosition,
                           srcRects[i],
                           Color.White,
                           0,
                           Vector2.Zero,
                           GetScale(i),
                           SpriteEffects.None,
-                          drawDepth);
+                          DrawDepth);
             }
         }
     }
