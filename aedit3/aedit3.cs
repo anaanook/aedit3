@@ -1,7 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using aedit.Classes.UI;
+using aedit.Classes.Core;
 namespace aedit
 {
     /// <summary>
@@ -14,13 +20,16 @@ namespace aedit
         SpriteBatch spriteBatch;
         UIManager manager;
         BitmapFont b;
-
+        Effect shaderTest;
+        Texture2D testerr;
         public aedit3()
         {
             root = this;
             graphics = new GraphicsDeviceManager(this)
             {
+                GraphicsProfile = GraphicsProfile.HiDef,
                 PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
+                
             };
             Content.RootDirectory = "Content";
         }
@@ -50,7 +59,16 @@ namespace aedit
             // TODO: use this.Content to load your game conte
             FontManager.Init();
             b = FontManager.UIFont;
+            shaderTest = Content.Load<Effect>("shaders/shader_basic");
             manager = new UIManager();
+
+            GraphicsDevice.SamplerStates[1] = SamplerState.PointWrap;
+            
+            Texture2D t2 = Content.Load<Texture2D>("pallete");
+            shaderTest.Parameters["Palette"].SetValue(t2);
+
+            testerr = ImageProcessor.LoadBMP("palette.bmp");
+            
         }
 
         /// <summary>
@@ -75,6 +93,13 @@ namespace aedit
             // TODO: Add your update logic here
             manager.Update();
             base.Update(gameTime);
+            try
+            {
+                shaderTest.Parameters["Time"].SetValue(gameTime.TotalGameTime.Milliseconds / 1000.0f);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -84,6 +109,9 @@ namespace aedit
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Target | ClearOptions.Stencil,Color.Green,1,0);
+
+
+
             spriteBatch.Begin(
                 SpriteSortMode.FrontToBack,
                 BlendState.AlphaBlend,
@@ -93,8 +121,9 @@ namespace aedit
                 null,
                 Matrix.CreateScale(2,2,-1)*Matrix.CreateTranslation(new Vector3(0,0,1))
                 );
-            
+
             manager.Draw(spriteBatch);
+            spriteBatch.Draw(testerr, new Rectangle(200, 0, 100, 100), Color.White);
             spriteBatch.End();
             // TODO: Add your drawing code here
 
