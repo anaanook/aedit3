@@ -17,24 +17,56 @@ namespace aedit
     /// </summary>
     public class aedit3 : Game
     {
+        public static Matrix gameScale = Matrix.CreateScale(2, 2, -1) * Matrix.CreateTranslation(new Vector3(0, 0, 1));
         public static aedit3 root;
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         UIManager manager;
         BitmapFont b;
+        Effect effect;
         Starfield Starfield;
+        KeyboardState oldKeyboardState;
         public aedit3()
         {
             root = this;
             graphics = new GraphicsDeviceManager(this)
             {
                 GraphicsProfile = GraphicsProfile.HiDef,
-                PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
-                
-            };
+                PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8,
+                PreferredBackBufferWidth = 1280,
+                PreferredBackBufferHeight = 720
+
+        };
             Content.RootDirectory = "Content";
         }
+        /// <summary>
+        /// 
+        /// 
+        /// </summary>
+        void InputTest() {
+            KeyboardState k = Keyboard.GetState();
 
+            if(k.IsKeyDown(Keys.LeftAlt) || k.IsKeyDown(Keys.RightAlt)) {
+                if(k.IsKeyDown(Keys.Enter) && oldKeyboardState.IsKeyUp(Keys.Enter)) {
+                    Console.WriteLine("Go fullscreen homie");
+                    int oldwidth = graphics.PreferredBackBufferWidth;
+                    int oldheight = graphics.PreferredBackBufferHeight;
+                    graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+                    graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+
+                    float scalefactorX = graphics.PreferredBackBufferWidth / (float)oldwidth;
+                    float scalefactorY = graphics.PreferredBackBufferHeight / (float)oldheight;
+
+                    gameScale = Matrix.CreateScale(2 * scalefactorY, 2 * scalefactorY, -1) * Matrix.CreateTranslation((graphics.PreferredBackBufferWidth- oldwidth)/2/2, 0, 1);
+                    Console.WriteLine();
+                    Window.IsBorderless = true;
+                    Window.Position = new Point(0, 0);
+                    graphics.ApplyChanges();
+                }
+            }
+
+            oldKeyboardState = k;
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -64,7 +96,10 @@ namespace aedit
 
             GraphicsDevice.SamplerStates[1] = SamplerState.PointWrap;
             Starfield = new Starfield();
-            
+            effect = Content.Load<Effect>("shaders/shader_basic");
+            effect.Parameters["Palette"].SetValue( Content.Load<Texture2D>("palette"));
+
+
         }
 
         /// <summary>
@@ -89,6 +124,7 @@ namespace aedit
             // TODO: Add your update logic here
             manager.Update();
             Starfield.Update(gameTime);
+            InputTest();
         }
 
         /// <summary>
@@ -104,15 +140,25 @@ namespace aedit
             spriteBatch.Begin(
                 SpriteSortMode.FrontToBack,
                 BlendState.AlphaBlend,
-                SamplerState.PointWrap,
+                SamplerState.PointClamp,
                 DepthStencilState.Default,
                 null,
                 null,
-                Matrix.CreateScale(2,2,-1)*Matrix.CreateTranslation(new Vector3(0,0,1))
+                gameScale
                 );
 
             manager.Draw(spriteBatch);
+            spriteBatch.End();
 
+            spriteBatch.Begin(
+                SpriteSortMode.FrontToBack,
+                BlendState.AlphaBlend,
+                SamplerState.PointWrap,
+                DepthStencilState.Default,
+                null,
+                effect,
+                gameScale
+                );
             Starfield.Draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here

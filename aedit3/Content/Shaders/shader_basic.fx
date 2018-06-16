@@ -8,9 +8,9 @@ sampler TextureSamplerB : register (s1) {
 
 float4 main(float4 position : SV_Position, float4 col : COLOR0, float2 uv : TEXCOORD0) : COLOR0{
 	float4 base = tex2D(TextureSamplerA,uv);
-	float pal = 1.0f / 16.0f;
+	float pal = 7.0f / 16.0f;
 	float offset = Time;
-	float4 test = tex2D(TextureSamplerB,float2((1-(base.r))*0.75f,pal));
+	float4 test = tex2D(TextureSamplerB,float2((1-(base.r))*0.75f+position.z*100,pal));
 	test.a = base.a;
 		test.rgb = test.rgb* base.a;
 	return test*col;
@@ -19,6 +19,6 @@ technique Ambient
 {
 	pass Pass1
 	{
-		PixelShader = compile ps_4_0_level_9_1 main();
+		PixelShader = compile ps_4_0 main();
 	}
 }

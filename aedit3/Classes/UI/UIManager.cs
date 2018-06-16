@@ -21,7 +21,9 @@ namespace aedit.Classes.UI
         {
             get
             {
-                return new Vector2(currentMouseState.X / 2, currentMouseState.Y / 2);
+                Vector3 piss = new Vector3(currentMouseState.X , currentMouseState.Y ,0);
+                piss = Vector3.Transform(piss, Matrix.Invert(aedit3.gameScale)) ;
+                return new Vector2((float)Math.Floor(piss.X), (float)Math.Floor(piss.Y));
             }
         }
         public override Vector2 Size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -65,13 +67,12 @@ namespace aedit.Classes.UI
             windows.Sort(WindowCompare);
             for(int i=0; i< windows.Count; i++)
             {
-                windows[i].depth = (i) / (float)windows.Count * 0.5f;
+                windows[i].depth = (i) / (float)windows.Count * 0.5f+0.1f;
             }
         }
         public override void Update()
         {
             currentMouseState = Mouse.GetState();
-            Vector2 mousePos = new Vector2(currentMouseState.Position.X / 2, currentMouseState.Position.Y / 2);
 
             mouseSprite.position = mousePos;
             if (isMousePressed() > 0)

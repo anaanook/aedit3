@@ -56,7 +56,7 @@
 /processorParam:Defines=
 /build:Shaders/shader_basic.fx
 
-#begin pallete.bmp
+#begin palette.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -66,5 +66,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:pallete.bmp
+/build:palette.bmp
 

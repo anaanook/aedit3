@@ -20,7 +20,16 @@ namespace aedit.Classes.UI {
         public Vector2 hitboxOffset = new Vector2(-2, -2);
         public UIElement parent = null;
         public List<UIElement> children = new List<UIElement>();
-        public Vector2 position;
+        Vector2 InternalPosition;
+        public Vector2 position {
+            get {
+                return InternalPosition;
+            }
+            set {
+                InternalPosition.X = (float)Math.Floor(value.X);
+                InternalPosition.Y = (float)Math.Floor(value.Y);
+            }
+        }
         abstract public Vector2 Size { get; set; }
 
         /**
