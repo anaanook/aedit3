@@ -25,7 +25,8 @@ namespace aedit
         BitmapFont b;
         Effect effect;
         Starfield Starfield;
-        KeyboardState oldKeyboardState;
+        public KeyboardState oldKeyboardState;
+        public KeyboardState KeyboardState;
         public aedit3()
         {
             root = this;
@@ -88,7 +89,6 @@ namespace aedit
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game conte
             FontManager.Init();
             b = FontManager.UIFont;
@@ -98,8 +98,6 @@ namespace aedit
             Starfield = new Starfield();
             effect = Content.Load<Effect>("shaders/shader_basic");
             effect.Parameters["Palette"].SetValue( Content.Load<Texture2D>("palette"));
-
-
         }
 
         /// <summary>
@@ -122,9 +120,11 @@ namespace aedit
                 Exit();
 
             // TODO: Add your update logic here
+            KeyboardState = Keyboard.GetState();
             manager.Update();
             Starfield.Update(gameTime);
             InputTest();
+            manager.postUpdate();
         }
 
         /// <summary>
@@ -133,6 +133,8 @@ namespace aedit
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            UIRenderTarget.DrawGroup(spriteBatch);
+
             GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Target | ClearOptions.Stencil,Color.Black,1,0);
 
 
@@ -160,6 +162,7 @@ namespace aedit
                 gameScale
                 );
             Starfield.Draw(spriteBatch);
+            
             spriteBatch.End();
             // TODO: Add your drawing code here
 

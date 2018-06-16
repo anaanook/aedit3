@@ -74,6 +74,7 @@
     <Compile Include="Classes\UI\UILabel.cs" />
     <Compile Include="Classes\UI\UIManager.cs" />
     <Compile Include="Classes\UI\UIRect.cs" />
+    <Compile Include="Classes\UI\UIRenderTarget.cs" />
     <Compile Include="Classes\UI\UISprite.cs" />
     <Compile Include="Classes\UI\UITextInput.cs" />
     <Compile Include="Classes\UI\UIWindow.cs" />
