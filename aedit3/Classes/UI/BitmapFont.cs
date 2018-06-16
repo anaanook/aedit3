@@ -10,6 +10,10 @@ using MonoGame;
 using static aedit.Classes.Core.ImageProcessor;
 
 namespace aedit.Classes.UI {
+    /*
+     * this ones pretty obvious but its the font
+     * TODO: newline functionality, fancy effects?
+     */
     class BitmapFont {
         Texture2D tex;
         byte[] charWidthData;
@@ -43,10 +47,28 @@ namespace aedit.Classes.UI {
             }
             Console.WriteLine("finished");
         }
-
+        public void DrawString(string _c, Vector2 pos, SpriteBatch b, float depth, Color col) {
+            Vector2 offset = Vector2.Zero;
+            char[] c = _c.ToArray<char>();
+            for (int i = 0; i < c.Length; i++) {
+                DrawChar(c[i], pos + offset, b, depth, col);
+                offset.X += GetWidth(c[i]);
+            }
+        }
+        public void DrawChar(char c, Vector2 pos, SpriteBatch b, float depth, Color col) {
+            b.Draw(
+                tex,
+                pos,
+                GetSrcRect(c),
+                col,
+                0,
+                Vector2.Zero,
+                new Vector2(1, 1),
+                SpriteEffects.None,
+                depth);
+        }
         /**
          * Returns the pixel size of the text string
-         * 
          */
         public Vector2 GetSize(String _s) {
             char[] c = _s.ToArray<char>();
@@ -82,28 +104,11 @@ namespace aedit.Classes.UI {
             int Wid = tex.Width;
             return (y * Wid + x) * 4;
         }
+        /**
+         * Function used by Width Detection loop
+         */
         public int GetWidth(char c) {
             return charWidthData[c - 1];
-        }
-        public void DrawString(string _c, Vector2 pos, SpriteBatch b, float depth, Color col) {
-            Vector2 offset = Vector2.Zero;
-            char[] c = _c.ToArray<char>();
-            for (int i = 0; i < c.Length; i++) {
-                DrawChar(c[i], pos + offset, b, depth, col);
-                offset.X += GetWidth(c[i]);
-            }
-        }
-        public void DrawChar(char c, Vector2 pos, SpriteBatch b, float depth, Color col) {
-            b.Draw(
-                tex,
-                pos,
-                GetSrcRect(c),
-                col,
-                0,
-                Vector2.Zero,
-                new Vector2(1, 1),
-                SpriteEffects.None,
-                depth);
         }
     }
 }

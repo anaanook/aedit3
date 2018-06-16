@@ -65,6 +65,7 @@
     <Compile Include="Classes\Core\Entity.cs" />
     <Compile Include="Classes\Core\ImageProcessor.cs" />
     <Compile Include="Classes\Core\TileMap.cs" />
+    <Compile Include="Classes\Editor\Windows\Edit_NewMapWin.cs" />
     <Compile Include="Classes\Ex\Starfield.cs" />
     <Compile Include="Classes\UI\BitmapFont.cs" />
     <Compile Include="Classes\UI\FontManager.cs" />

@@ -8,8 +8,14 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using static aedit.Classes.Core.ImageProcessor;
 using aedit.Classes.Core;
+using aedit.Classes.Editor;
+using aedit.Classes.Editor.Windows;
 
 namespace aedit.Classes.UI {
+    /**
+     * Manager for UIelements, concerned with sorting?
+     * Maybe input? I should probably remove that
+     */
     class UIManager : UIElement {
         public UITextInput activeTextInput;
         UISprite mouseSprite;
@@ -26,24 +32,28 @@ namespace aedit.Classes.UI {
                 return new Vector2((float)Math.Floor(piss.X), (float)Math.Floor(piss.Y));
             }
         }
-        public override Vector2 Size {
-            get;
-            set;
-        }
+        public override Vector2 Size {get;set;}
         public UIManager() {
+            //Overwrite default depth value inherited from uielement
             depth = 0;
+            //Setup static root
             root = this;
             Texture2D uitex = aedit3.root.Content.Load<Texture2D>("ui");
+            //Creates transparency
             AlphaKey(uitex, new Color(0, 255, 0));
-            for (int i = 0; i < 5; i++) {
-                UIWindow test = new UIWindow(new Vector2(10 + i * 30, 10 + i * 30), new Vector2(80, 120));
-                AddChild(test);
-            }
+            //Add stuff here
+            Edit_NewMapWin ed = new Edit_NewMapWin(Vector2.Zero);
+            AddChild(ed);
+
             mouseSprite = new UISprite(Vector2.Zero, "ui", new Rectangle(32, 0, 6, 8));
             mouseSprite.depth = 1f;
             AddChild(mouseSprite);
+
             Sort();
         }
+        /**
+         * Compare function for sorting
+         */
         public int WindowCompare(UIElement x, UIElement y) {
             if (x.depth > y.depth) {
                 return 1;
@@ -53,6 +63,10 @@ namespace aedit.Classes.UI {
                 return -1;
             }
         }
+        /**
+         * Sorting function
+         * should add always front/always back?
+         */
         public void Sort() {
             windows.Sort(WindowCompare);
             for (int i = 0; i < windows.Count; i++) {
@@ -60,15 +74,19 @@ namespace aedit.Classes.UI {
             }
         }
         public override void Update() {
+            //Input business
             currentMouseState = Mouse.GetState();
 
             mouseSprite.position = mousePos;
+
             if (isMousePressed() > 0) {
                 for (int i = 0; i < windows.Count; i++) {
                     if (windows[windows.Count - i - 1].HitTest(mousePos)) {
                         windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
                         break;
                     } else {
+                        //this extra stuff is for when button hitbox overlaps window hitbox?
+                        //maybe remove/clean up later
                         bool result = false;
                         foreach (UIButton b in windows[windows.Count - i - 1].children.OfType<UIButton>()) {
                             if (b.HitTest(mousePos)) {
@@ -84,16 +102,27 @@ namespace aedit.Classes.UI {
             }
             base.Update();
         }
+        /**
+         * Method for updating input, should remove when dedicated input class exists?
+         * maybe should add postupdate function to uielement class
+         */
         public void postUpdate() {
-
             oldMouseState = currentMouseState;
         }
+        /**
+         * Important override for addchild, to detect window for sorting
+         * this is NOT the best way to do it
+         */
         public override void AddChild(Entity child) {
-            if (child.GetType() == typeof(UIWindow)) {
+            UIWindow win = child as UIWindow;
+            if (win != null) {
                 windows.Add((UIWindow)child);
             }
             base.AddChild(child);
         }
+        /**
+         * Input behavior
+         */
         public int isMousePressed() {
             if (currentMouseState.LeftButton == ButtonState.Pressed) {
                 if (oldMouseState.LeftButton == ButtonState.Released) {

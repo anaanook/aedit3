@@ -12,6 +12,10 @@ namespace aedit.Classes.Ex {
         public Vector3 pos;
         public Vector2 pos_2d;
     }
+    /*
+     * dumb onesie class
+     * for background of editor ( for fun )
+     */
     class Starfield {
         float maxDepth = 62;
         Star[] stars;
@@ -49,14 +53,8 @@ namespace aedit.Classes.Ex {
         }
         public void Draw(SpriteBatch b) {
             UIElement.WhitePixelTest();
-            for (int i = 0; i < stars.Length; i++) {/*
-                b.Draw(
-                    UIElement.whitePixel, 
-                    new Rectangle((int)stars[i].pos_2d.X, (int)stars[i].pos_2d.Y, (int)((maxDepth - stars[i].pos.Z)/(float)maxDepth*3.0f+1),
-                    (int)((maxDepth - stars[i].pos.Z) / (float)maxDepth * 3.0f+1)), 
-                    Color.White) ;*/
+            for (int i = 0; i < stars.Length; i++) {
                 float scale = (int)((maxDepth - stars[i].pos.Z) / (float)maxDepth * 2.0f + 1);
-
                 b.Draw(
                     UIElement.whitePixel,
                     stars[i].pos_2d,

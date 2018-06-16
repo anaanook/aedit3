@@ -11,6 +11,10 @@ using MonoGame;
 
 namespace aedit.Classes.UI {
     public delegate void MousePressedCallback(Vector2 pos, Object whatever);
+    /**
+     * This entire class basically got refactored to Core.Entity
+     * not sure if it was a good idea...
+     */
     abstract public class UIElement : Entity
     {
         /*

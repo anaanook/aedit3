@@ -28,8 +28,15 @@ namespace aedit.Classes.UI
         public Point cornerSize;
         public String tex;
     }
+    /**
+     * ugly class ahead..  the button
+     */
     class UIButton : UIElement
     {
+        /**
+         * These are button definitions that need to be moved 
+         * to the container class when i make it
+         */
         public static UIButtonDef Default_UILabelButton = new UIButtonDef
         {
             type = ButtonType.Label,
@@ -61,18 +68,22 @@ namespace aedit.Classes.UI
             get;
             set; }
         public UIButton() {
-
         }
-        public UIButton(Vector2 _position, Vector2 _size)
-        {
-            Setup(ButtonType.Invisible, _position, _size, null, Rectangle.Empty, Point.Zero, Point.Zero);
-        }
-        public UIButton(Vector2 _position, String _label, Vector2 _padding, BitmapFont _font, UIButtonDef _def)
-        {
+        /**
+         * This one is for labelled buttons
+         */
+        public UIButton(Vector2 _position, String _label, Vector2 _padding, BitmapFont _font, UIButtonDef _def) {
             Setup(_def.type, _position, _font.GetSize(_label) + _padding * 2, _def.tex, _def.srcRect, _def.pressedOffset, _def.cornerSize);
             label = new UILabel(_label, _padding + new Vector2(0, -2), _font, Color.White);
             labelPosition = label.position;
             AddChild(label);
+        }
+        /**
+         * All these constructors suck
+         */
+        public UIButton(Vector2 _position, Vector2 _size)
+        {
+            Setup(ButtonType.Invisible, _position, _size, null, Rectangle.Empty, Point.Zero, Point.Zero);
         }
         public UIButton(Vector2 _position, Vector2 _size, UIButtonDef _def)
         {
@@ -112,6 +123,7 @@ namespace aedit.Classes.UI
                 AddChild(gfx[0]);
                 AddChild(gfx[1]);
             }
+            mousePressedCallback = DefaultButtonCallback;
         }
         /**
          * Garbage function for testing
@@ -124,12 +136,10 @@ namespace aedit.Classes.UI
             }
         }
         /*
-         * Contains too much mouse logic, needs to be factored out somehow
+         * improved the mouse logic..
          */
         public override void Update()
         {
-            int mouse = root.isMousePressed();
-            Vector2 mousePos = root.mousePos;
             if(type != ButtonType.Invisible)
             {
                 if (state == UIButtonState.Pressed)

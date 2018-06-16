@@ -19,25 +19,30 @@ namespace aedit.Classes.UI {
             get {
                 return bg.Size;
             }
-            set => throw new NotImplementedException();
+            set {
+                bg.Size = value;
+            }
         }
         UIWindowState state = UIWindowState.Neutral;
         int mouse;
         Vector2 mouseOffset;
         UIRect bg;
+        public UILabel label;
+        public UIButton menubar;
+        public UIButton closeButton;
         public UIWindow(Vector2 _position, Vector2 _size) {
             SetPadding(0);
             position = _position;
             mousePressedCallback = mousePressed_func;
             bg = new UIRect(UIRect.def, Vector2.Zero, _size);
             AddChild(bg);
-            UIButton menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.Size.X - 15, 12));
+            menubar = new UIButton(new Vector2(0, 0), new Vector2(bg.Size.X - 15, 12));
             menubar.mousePressedCallback = menuPressed_func;
-            UIButton closeButton = new UIButton(new Vector2(bg.Size.X - 13, 0), new Vector2(12, 12), UIButton.Default_CloseButton);
+            closeButton = new UIButton(new Vector2(bg.Size.X - 13, 0), new Vector2(12, 12), UIButton.Default_CloseButton);
             closeButton.mousePressedCallback = closePressed_func;
             AddChild(menubar);
             AddChild(closeButton);
-            UILabel label = new UILabel("Window", new Vector2(10, 3), FontManager.UIFont, Color.White);
+            label = new UILabel("Window", new Vector2(10, 3), FontManager.UIFont, Color.White);
             AddChild(label);
         }
         /**

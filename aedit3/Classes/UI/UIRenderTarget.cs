@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using static aedit.aedit3;
 namespace aedit.Classes.UI {
+    /**
+     * Unfinished ass class.. idea is a drawable rect inside a window?
+     * I might be able to achieve this with stencil buffer... but this works
+     */
     public class UIRenderTarget : UIElement {
         public static List<UIRenderTarget> UIRenderTargets = new List<UIRenderTarget>();
         public RenderTarget2D RenderTarget;

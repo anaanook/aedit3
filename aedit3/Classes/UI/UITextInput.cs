@@ -8,13 +8,21 @@ using Microsoft.Xna.Framework;
 
 namespace aedit.Classes.UI {
     class UITextInput : UIElement {
-         public static UITextInput activeTextInput;
-         public static UIButtonDef Default_TextInputButton = new UIButtonDef {
-              type = ButtonType.Static,
-              srcRect = new Rectangle(73, 77, 6, 6),
-              pressedOffset = new Point(0, 16),
-              tex = "ui"
-          };
+        public static UITextInput activeTextInput;
+        public UIButtonState state;
+        public UIButton[] buttons;
+        public UILabel label;
+        public override Vector2 Size { get; set; }
+        /**
+         * UIbutton defs for the textinput
+         * probably need to move these
+         */
+        public static UIButtonDef Default_TextInputButton = new UIButtonDef {
+            type = ButtonType.Static,
+            srcRect = new Rectangle(73, 77, 6, 6),
+            pressedOffset = new Point(0, 16),
+            tex = "ui"
+        };
         public static UIButtonDef Default_TextInputField = new UIButtonDef {
             type = ButtonType.Dynamic,
             srcRect = new Rectangle(80, 73, 24, 16),
@@ -22,11 +30,10 @@ namespace aedit.Classes.UI {
             pressedOffset = new Point(0, 16),
             tex = "ui"
         };
-        public UIButtonState state;
-        public UIButton[] buttons;
-        public UILabel label;
-        public override Vector2 Size { get; set; }
-
+        /**
+         * Callback func used for setting the text input
+         * called by textinput objects
+         */
         public static void SetActiveTextInput(Vector2 pos, Object obj) {
             if (UIManager.root.isMousePressed() == 1) {
                 if (activeTextInput != null) {
@@ -38,10 +45,14 @@ namespace aedit.Classes.UI {
                 activeTextInput.state = UIButtonState.Pressed;
             }
         }
+        /**
+         * Event callback for inputting text
+         */
         public void TextInputCallback(object obj, TextInputEventArgs args) {
             string newString = label.text + args.Character.ToString();
-            if(args.Character == 08 ) {
-                if( label.text.Length > 0) {
+            //This is a backspace
+            if (args.Character == 08) {
+                if (label.text.Length > 0) {
                     label.text = label.text.Substring(0, label.text.Length - 1);
                 }
             } else {
@@ -50,6 +61,10 @@ namespace aedit.Classes.UI {
                 }
             }
         }
+        /**
+         * Called by other objects to see if the textinput should lose focus
+         * needs to be expanded?
+         */
         public static void TestActiveTextInput(UIElement obj) {
             if (activeTextInput != null) {
                 if (!obj.children.Contains<Entity>(activeTextInput)) {
@@ -59,6 +74,9 @@ namespace aedit.Classes.UI {
                 }
             }
         }
+        /**
+         * Yikes
+         */
         public UITextInput(Vector2 _position, Vector2 _size) {
             state = UIButtonState.Released;
             depth = 0.05f;
@@ -66,21 +84,22 @@ namespace aedit.Classes.UI {
             position = _position;
             buttons = new UIButton[2];
             buttons[1] = new UIButton(new Vector2(-8, 4), new Vector2(6, 6), Default_TextInputButton);
-            buttons[0] = new UIButton(new Vector2(0,0), new Vector2(_size.X, _size.Y), Default_TextInputField);
-            label = new UILabel("",new Vector2(2, 4), FontManager.UIFont, Color.White);
+            buttons[0] = new UIButton(new Vector2(0, 0), new Vector2(_size.X, _size.Y), Default_TextInputField);
+            label = new UILabel("", new Vector2(2, 4), FontManager.UIFont, Color.White);
             AddChild(buttons[1]);
             AddChild(buttons[0]);
             AddChild(label);
             mousePressedCallback = SetActiveTextInput;
         }
         public override bool HitTest(Vector2 pos) {
+            // this is for the little node button, making sure it also hit tests
             if (buttons[1].HitTest(pos)) {
                 return true;
             }
             return base.HitTest(pos);
         }
         public override void Update() {
-            if(state == UIButtonState.Pressed) {
+            if (state == UIButtonState.Pressed) {
                 buttons[1].state = UIButtonState.Pressed;
                 buttons[0].state = UIButtonState.Pressed;
             } else {
@@ -89,7 +108,5 @@ namespace aedit.Classes.UI {
             }
             base.Update();
         }
-
-
     }
 }
