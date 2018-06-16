@@ -39,11 +39,6 @@ namespace aedit.Classes.UI {
             AddChild(closeButton);
             UILabel label = new UILabel("Window", new Vector2(10, 3), FontManager.UIFont, Color.White);
             AddChild(label);
-            for (int i=0; i<4; i++) {
-
-                UITextInput t = new UITextInput(new Vector2(15, 15+i*18), new Vector2(55, 15));
-                AddChild(t);
-            }
         }
         /**
          * Callback functions.. may need to refactor?
