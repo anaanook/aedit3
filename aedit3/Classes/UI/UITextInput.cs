@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using aedit.Classes.Core;
 using Microsoft.Xna.Framework;
 
 namespace aedit.Classes.UI {
@@ -51,7 +52,7 @@ namespace aedit.Classes.UI {
         }
         public static void TestActiveTextInput(UIElement obj) {
             if (activeTextInput != null) {
-                if (!obj.children.Contains<UIElement>(activeTextInput)) {
+                if (!obj.children.Contains<Entity>(activeTextInput)) {
                     aedit3.root.Window.TextInput -= activeTextInput.TextInputCallback;
                     activeTextInput.state = UIButtonState.Released;
                     activeTextInput = null;

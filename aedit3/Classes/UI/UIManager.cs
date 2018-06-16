@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using static aedit.Classes.Core.ImageProcessor;
+using aedit.Classes.Core;
+
 namespace aedit.Classes.UI
 {
     class UIManager : UIElement
@@ -107,7 +109,7 @@ namespace aedit.Classes.UI
             oldMouseState = currentMouseState;
             
         }
-        public override void AddChild(UIElement child)
+        public override void AddChild(Entity child)
         {
             if (child.GetType() == typeof(UIWindow))
             {

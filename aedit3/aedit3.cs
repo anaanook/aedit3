@@ -56,8 +56,8 @@ namespace aedit
 
                     float scalefactorX = graphics.PreferredBackBufferWidth / (float)oldwidth;
                     float scalefactorY = graphics.PreferredBackBufferHeight / (float)oldheight;
-
-                    gameScale = Matrix.CreateScale(2 * scalefactorY, 2 * scalefactorY, -1) * Matrix.CreateTranslation((graphics.PreferredBackBufferWidth- oldwidth)/2/2, 0, 1);
+                    float test = (oldwidth * scalefactorX);
+                    gameScale = Matrix.CreateScale(2 * scalefactorY, 2 * scalefactorY, -1) * Matrix.CreateTranslation((test-graphics.PreferredBackBufferWidth)/4, 0, 1);
                     Console.WriteLine();
                     Window.IsBorderless = true;
                     Window.Position = new Point(0, 0);
