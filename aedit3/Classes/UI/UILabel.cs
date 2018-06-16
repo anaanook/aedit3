@@ -12,8 +12,8 @@ namespace aedit.Classes.UI
     {
         bool dropShadow = false;
         Vector2 shadowDir = new Vector2(0, 1);
-        BitmapFont font;
-        String text;
+        public BitmapFont font;
+        public String text;
         Color color;
         Color shadowColor;
         public override Vector2 Size {

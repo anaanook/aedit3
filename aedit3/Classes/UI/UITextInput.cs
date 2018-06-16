@@ -30,14 +30,29 @@ namespace aedit.Classes.UI {
             if (UIManager.root.isMousePressed() == 1) {
                 if (activeTextInput != null) {
                     activeTextInput.state = UIButtonState.Released;
+                    aedit3.root.Window.TextInput -= activeTextInput.TextInputCallback;
                 }
                 activeTextInput = (UITextInput)obj;
+                aedit3.root.Window.TextInput += activeTextInput.TextInputCallback;
                 activeTextInput.state = UIButtonState.Pressed;
+            }
+        }
+        public void TextInputCallback(object obj, TextInputEventArgs args) {
+            string newString = label.text + args.Character.ToString();
+            if(args.Character == 08 ) {
+                if( label.text.Length > 0) {
+                    label.text = label.text.Substring(0, label.text.Length - 1);
+                }
+            } else {
+                if (label.font.GetSize(newString).X + 2 < Size.X) {
+                    label.text = newString;
+                }
             }
         }
         public static void TestActiveTextInput(UIElement obj) {
             if (activeTextInput != null) {
                 if (!obj.children.Contains<UIElement>(activeTextInput)) {
+                    aedit3.root.Window.TextInput -= activeTextInput.TextInputCallback;
                     activeTextInput.state = UIButtonState.Released;
                     activeTextInput = null;
                 }
@@ -51,8 +66,10 @@ namespace aedit.Classes.UI {
             buttons = new UIButton[2];
             buttons[1] = new UIButton(new Vector2(-8, 4), new Vector2(6, 6), Default_TextInputButton);
             buttons[0] = new UIButton(new Vector2(0,0), new Vector2(_size.X, _size.Y), Default_TextInputField);
+            label = new UILabel("",new Vector2(2, 4), FontManager.UIFont, Color.White);
             AddChild(buttons[1]);
             AddChild(buttons[0]);
+            AddChild(label);
             mousePressedCallback = SetActiveTextInput;
         }
         public override bool HitTest(Vector2 pos) {
