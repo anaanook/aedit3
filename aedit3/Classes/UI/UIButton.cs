@@ -8,19 +8,19 @@ using Microsoft.Xna.Framework.Graphics;
 using static aedit.Classes.UI.UIManager;
 namespace aedit.Classes.UI
 {
-    enum UIButtonState
+    public enum UIButtonState
     {
         Pressed,
         Released
     }
-    enum ButtonType
+    public enum ButtonType
     {
         Invisible,
         Static,
         Dynamic,
         Label
     }
-    struct UIButtonDef
+    public struct UIButtonDef
     {
         public ButtonType type;
         public Rectangle srcRect;
@@ -119,6 +119,7 @@ namespace aedit.Classes.UI
                 } else {
                     gfx[0] = new UISprite(Vector2.Zero, "ui",  _srcRect);
                     gfx[1] = new UISprite(Vector2.Zero, "ui", new Rectangle(_srcRect.X + _pressedOffset.X, _srcRect.Y + _pressedOffset.Y, _srcRect.Width, _srcRect.Height));
+                    Size = new Vector2(_srcRect.Width, _srcRect.Height);
                 }
                 AddChild(gfx[0]);
                 AddChild(gfx[1]);

@@ -42,9 +42,10 @@ namespace aedit.Classes.UI {
             //Creates transparency
             AlphaKey(uitex, new Color(0, 255, 0));
             //Add stuff here
-            Edit_NewMapWin ed = new Edit_NewMapWin(Vector2.Zero);
-            AddChild(ed);
-
+            //Edit_NewMapWin ed = new Edit_NewMapWin(Vector2.Zero);
+            //AddChild(ed);
+            Edit_TestWin tst = new Edit_TestWin(new Vector2(30,30));
+            AddChild(tst);
             mouseSprite = new UISprite(Vector2.Zero, "ui", new Rectangle(32, 0, 6, 8));
             mouseSprite.depth = 1f;
             AddChild(mouseSprite);
@@ -84,19 +85,6 @@ namespace aedit.Classes.UI {
                     if (windows[windows.Count - i - 1].HitTest(mousePos)) {
                         windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
                         break;
-                    } else {
-                        //this extra stuff is for when button hitbox overlaps window hitbox?
-                        //maybe remove/clean up later
-                        bool result = false;
-                        foreach (UIButton b in windows[windows.Count - i - 1].children.OfType<UIButton>()) {
-                            if (b.HitTest(mousePos)) {
-                                result = true;
-                            }
-                        }
-                        if (result) {
-                            windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
-                            break;
-                        }
                     }
                 }
             }

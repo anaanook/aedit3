@@ -66,6 +66,7 @@
     <Compile Include="Classes\Core\ImageProcessor.cs" />
     <Compile Include="Classes\Core\TileMap.cs" />
     <Compile Include="Classes\Editor\Windows\Edit_NewMapWin.cs" />
+    <Compile Include="Classes\Editor\Windows\Edit_TestWin.cs" />
     <Compile Include="Classes\Ex\Starfield.cs" />
     <Compile Include="Classes\UI\BitmapFont.cs" />
     <Compile Include="Classes\UI\FontManager.cs" />
@@ -76,8 +77,10 @@
     <Compile Include="Classes\UI\UIManager.cs" />
     <Compile Include="Classes\UI\UIRect.cs" />
     <Compile Include="Classes\UI\UIRenderTarget.cs" />
+    <Compile Include="Classes\UI\UIScrollbar.cs" />
     <Compile Include="Classes\UI\UISprite.cs" />
     <Compile Include="Classes\UI\UITextInput.cs" />
+    <Compile Include="Classes\UI\UITilingRect.cs" />
     <Compile Include="Classes\UI\UIWindow.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

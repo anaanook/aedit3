@@ -88,6 +88,14 @@ namespace aedit.Classes.UI {
                 }
             }
         }
+        public override bool HitTest(Vector2 pos) {
+            for(int i=0; i<children.Count; i++) {
+                if (children[i].HitTest(pos)) {
+                    return true;
+                }
+            }
+            return base.HitTest(pos);
+        }
         public override void Update() {
             mouse = root.isMousePressed();
             Vector2 mousePos = root.mousePos;
