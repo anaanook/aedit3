@@ -39,13 +39,13 @@ namespace aedit.Classes.UI {
             buttons[1] = new UIButton(new Vector2(0,25), new Vector2(11, 8),ScrollButtonCenter);
             buttons[1].mousePressedCallback = pressCenter;
             buttons[2] = new UIButton(new Vector2(0,70), new Vector2(11, 10), ScrollButtonDown);
-
             Size = new Vector2(11, buttons[2].position.Y+buttons[2].Size.Y);
             bounds = new Vector2(0, buttons[2].position.Y - buttons[1].Size.Y);
             bg = new UITilingRect(new Rectangle(29, 24, 11, 8), new Vector2(0, buttons[0].Size.Y), new Vector2(11, bounds.Y));
             bg.depth = bg.depth / 2.0f;
             AddChild(bg);
             for (int i=0; i< buttons.Length; i++) {
+                if(i!=1)
                 buttons[i].SetPadding(0);
                 AddChild(buttons[i]);
             }
@@ -88,6 +88,8 @@ namespace aedit.Classes.UI {
                 buttons[1].position += new Vector2(0, 1);
             }
             clampScroller();
+
+            Console.WriteLine((buttons[1].position.Y- buttons[0].Size.Y ) / (bounds.Y - buttons[1].Size.Y-1));
 
             int mouse = root.isMousePressed();
             for (int i = 0; i < children.Count(); i++) {
