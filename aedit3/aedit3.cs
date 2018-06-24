@@ -23,7 +23,9 @@ namespace aedit
         SpriteBatch spriteBatch;
         UIManager manager;
         BitmapFont b;
+        public bool fullscreen = false;
         Effect effect;
+        Effect uiEffect;
         Starfield Starfield;
         public KeyboardState oldKeyboardState;
         public KeyboardState KeyboardState;
@@ -36,8 +38,10 @@ namespace aedit
                 PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8,
                 PreferredBackBufferWidth = 1280,
                 PreferredBackBufferHeight = 720
-
-        };
+                
+            };
+            Window.IsBorderless = true;
+            
             Content.RootDirectory = "Content";
         }
         /// <summary>
@@ -46,23 +50,31 @@ namespace aedit
         /// </summary>
         void InputTest() {
             KeyboardState k = Keyboard.GetState();
-
             if(k.IsKeyDown(Keys.LeftAlt) || k.IsKeyDown(Keys.RightAlt)) {
                 if(k.IsKeyDown(Keys.Enter) && oldKeyboardState.IsKeyUp(Keys.Enter)) {
-                    Console.WriteLine("Go fullscreen homie");
-                    int oldwidth = graphics.PreferredBackBufferWidth;
-                    int oldheight = graphics.PreferredBackBufferHeight;
-                    graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-                    graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+                    if (!fullscreen) {
+                        Console.WriteLine("Go fullscreen homie");
+                        int oldwidth = graphics.PreferredBackBufferWidth;
+                        int oldheight = graphics.PreferredBackBufferHeight;
+                        graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+                        graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+                        float scalefactorX = graphics.PreferredBackBufferWidth / (float)oldwidth;
+                        float scalefactorY = graphics.PreferredBackBufferHeight / (float)oldheight;
+                        float test = (oldwidth * scalefactorY);
+                        gameScale = Matrix.CreateScale(2 * scalefactorY, 2 * scalefactorY, -1) * Matrix.CreateTranslation((graphics.PreferredBackBufferWidth - test) / 2, 0, 1);
+                        Console.WriteLine();
+                        Window.Position = new Point(0, 0);
+                        graphics.ApplyChanges();
+                        fullscreen = true;
+                    } else {
+                        graphics.PreferredBackBufferWidth = 1280;
+                        graphics.PreferredBackBufferHeight = 720;
+                        Window.Position = new Point(GraphicsDevice.DisplayMode.Width/2 -1280/2, GraphicsDevice.DisplayMode.Height/2 - 720/2);
+                        gameScale = Matrix.CreateScale(2 , 2 , -1) * Matrix.CreateTranslation(0, 0, 1);
+                        graphics.ApplyChanges();
+                        fullscreen =false;
+                    }
 
-                    float scalefactorX = graphics.PreferredBackBufferWidth / (float)oldwidth;
-                    float scalefactorY = graphics.PreferredBackBufferHeight / (float)oldheight;
-                    float test = (oldwidth * scalefactorY);
-                    gameScale = Matrix.CreateScale(2 * scalefactorY, 2 * scalefactorY, -1) * Matrix.CreateTranslation((graphics.PreferredBackBufferWidth-test ) /2, 0, 1);
-                    Console.WriteLine();
-                    Window.IsBorderless = true;
-                    Window.Position = new Point(0, 0);
-                    graphics.ApplyChanges();
                 }
             }
 
@@ -77,7 +89,6 @@ namespace aedit
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -98,6 +109,7 @@ namespace aedit
             Starfield = new Starfield();
             effect = Content.Load<Effect>("shaders/shader_basic");
             effect.Parameters["Palette"].SetValue( Content.Load<Texture2D>("palette"));
+            uiEffect = Content.Load<Effect>("shaders/shader_ui");
         }
 
         /// <summary>
@@ -145,7 +157,7 @@ namespace aedit
                 SamplerState.PointClamp,
                 DepthStencilState.Default,
                 null,
-                null,
+                uiEffect,
                 gameScale
                 );
 

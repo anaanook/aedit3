@@ -27,6 +27,21 @@ namespace aedit.Classes.UI
         public Point pressedOffset;
         public Point cornerSize;
         public String tex;
+        public Vector2 size {
+            get {
+                return new Vector2(srcRect.Width, srcRect.Height);
+            }
+        }
+        public int width {
+            get {
+                return srcRect.Width;
+            }
+        }
+        public int height {
+            get {
+                return srcRect.Height;
+            }
+        }
     }
     /**
      * ugly class ahead..  the button
@@ -37,6 +52,7 @@ namespace aedit.Classes.UI
          * These are button definitions that need to be moved 
          * to the container class when i make it
          */
+        
         public static UIButtonDef Default_UILabelButton = new UIButtonDef
         {
             type = ButtonType.Label,
@@ -55,7 +71,7 @@ namespace aedit.Classes.UI
         };
         public static UIButtonDef Default_CloseButton = new UIButtonDef {
             type = ButtonType.Static,
-            srcRect = new Rectangle(87, 56, 13, 13),
+            srcRect = new Rectangle(56, 0, 13, 13),
             pressedOffset = new Point(12, 0),
             tex = "ui"
         };
@@ -64,9 +80,25 @@ namespace aedit.Classes.UI
         public ButtonType type;
         public UIButtonState state;
         public UIElement[] gfx;
+        private Vector2 pSize;
         public override Vector2 Size {
-            get;
-            set; }
+            get {
+                if (gfx != null) {
+
+                    return gfx[0].Size;
+                } else {
+                    return pSize;
+                }
+            }
+            set {
+                if(gfx != null) {
+                    gfx[0].Size = value;
+                    gfx[1].Size = value;
+                } else {
+                    pSize = value;
+                }
+            }
+        }
         public UIButton() {
         }
         /**

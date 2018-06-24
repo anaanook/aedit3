@@ -23,6 +23,7 @@ namespace aedit.Classes.UI {
         KeyboardState currentKeyboardState;
         MouseState oldMouseState;
         MouseState currentMouseState;
+        public static Edit_MasterWin win;
         public List<UIWindow> windows = new List<UIWindow>();
         public static UIManager root;
         public Vector2 mousePos {
@@ -44,8 +45,8 @@ namespace aedit.Classes.UI {
             //Add stuff here
             //Edit_NewMapWin ed = new Edit_NewMapWin(Vector2.Zero);
             //AddChild(ed);
-            Edit_TestWin tst = new Edit_TestWin(new Vector2(30,30));
-            AddChild(tst);
+            win = new Edit_MasterWin();
+            AddChild(win);
             mouseSprite = new UISprite(Vector2.Zero, "ui", new Rectangle(32, 0, 6, 8));
             mouseSprite.depth = 1f;
             AddChild(mouseSprite);
@@ -78,6 +79,7 @@ namespace aedit.Classes.UI {
             //Input business
             currentMouseState = Mouse.GetState();
 
+            if(win.state != UIWindowState.Dragging)
             mouseSprite.position = mousePos;
 
             if (isMousePressed() > 0) {

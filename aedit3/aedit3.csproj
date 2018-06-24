@@ -62,11 +62,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classes\Core\PaletteManager.cs" />
     <Compile Include="Classes\Core\Entity.cs" />
     <Compile Include="Classes\Core\ImageProcessor.cs" />
     <Compile Include="Classes\Core\TileMap.cs" />
+    <Compile Include="Classes\Editor\Windows\Edit_MasterWin.cs" />
     <Compile Include="Classes\Editor\Windows\Edit_NewMapWin.cs" />
-    <Compile Include="Classes\Editor\Windows\Edit_TestWin.cs" />
+    <Compile Include="Classes\UI\UIScrollWindow.cs" />
     <Compile Include="Classes\Ex\Starfield.cs" />
     <Compile Include="Classes\UI\BitmapFont.cs" />
     <Compile Include="Classes\UI\FontManager.cs" />
@@ -94,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shaders\shader_basic.fx" />
+    <Content Include="Content\Shaders\shader_tiles.fx" />
+    <Content Include="Content\Shaders\shader_ui.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

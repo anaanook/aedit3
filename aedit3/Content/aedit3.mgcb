@@ -68,3 +68,15 @@
 /processorParam:TextureFormat=Color
 /build:palette.bmp
 
+#begin Shaders/shader_ui.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/shader_ui.fx
+
+#begin Shaders/shader_tiles.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/shader_tiles.fx
+

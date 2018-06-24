@@ -25,10 +25,15 @@ namespace aedit.Classes.UI
         /**
          * UIRect definition that should be moved to container class
          */
-        public static UIRectDefinition def = new UIRectDefinition() {
+        public static UIRectDefinition MasterWindow = new UIRectDefinition() {
             tex = "ui",
-            srcrect = new Rectangle(8, 56, 33, 33),
-            cornerSize = new Point(12, 13)
+            srcrect = new Rectangle(0, 64, 24, 32),
+            cornerSize = new Point(11, 13)
+        };
+        public static UIRectDefinition DefaultWindow = new UIRectDefinition() {
+            tex = "ui",
+            srcrect = new Rectangle(0, 0, 24, 32),
+            cornerSize = new Point(11, 13)
         };
         private Point StartingCornerSize;    //needed for resetting the size
         /**
