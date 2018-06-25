@@ -51,8 +51,13 @@ namespace aedit.Classes.UI {
             Vector2 offset = Vector2.Zero;
             char[] c = _c.ToArray<char>();
             for (int i = 0; i < c.Length; i++) {
-                DrawChar(c[i], pos + offset, b, depth, col);
-                offset.X += GetWidth(c[i]);
+                if (c[i] == '\n') {
+                    offset.Y += 8;
+                    offset.X = 0;
+                } else {
+                    DrawChar(c[i], pos + offset, b, depth, col);
+                    offset.X += GetWidth(c[i]);
+                }
             }
         }
         public void DrawChar(char c, Vector2 pos, SpriteBatch b, float depth, Color col) {
@@ -74,11 +79,17 @@ namespace aedit.Classes.UI {
             char[] c = _s.ToArray<char>();
             Vector2 output = Vector2.Zero;
             output.Y = tilesize;
+            int currentLine = 0;
             for (int i = 0; i < c.Length; i++) {
                 if (c[i] != '\n') {
-                    output.X += GetWidth(c[i]);
+                    currentLine += GetWidth(c[i]);
+                } else {
+                    output.Y += tilesize;
+                    output.X = currentLine > output.X ? currentLine : output.X;
+                    currentLine = 0;
                 }
             }
+            output.X = currentLine > output.X ? currentLine : output.X;
             return output;
         }
         /**

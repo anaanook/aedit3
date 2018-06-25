@@ -68,6 +68,7 @@
     <Compile Include="Classes\Core\TileMap.cs" />
     <Compile Include="Classes\Editor\Windows\Edit_MasterWin.cs" />
     <Compile Include="Classes\Editor\Windows\Edit_NewMapWin.cs" />
+    <Compile Include="Classes\UI\UIMessageBox.cs" />
     <Compile Include="Classes\UI\UIScrollWindow.cs" />
     <Compile Include="Classes\Ex\Starfield.cs" />
     <Compile Include="Classes\UI\BitmapFont.cs" />

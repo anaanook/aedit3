@@ -17,11 +17,12 @@ namespace aedit.Classes.UI {
             srcRect = _srcRect;
         }
         public override void Draw(SpriteBatch b) {
+            UIButton a = parent as UIButton;
             if (visible)
                 b.Draw(tex,
                              GlobalPosition,
                              srcRect,
-                             Color.White,
+                             pal,
                              0,
                              Vector2.Zero,
                              Vector2.One,

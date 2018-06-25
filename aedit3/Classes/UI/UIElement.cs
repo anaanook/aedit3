@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame;
 
 namespace aedit.Classes.UI {
-    public delegate void MousePressedCallback(Vector2 pos, Object whatever);
+    public delegate void MousePressedCallback(Vector2 pos, Object whatever, int mouse);
     /**
      * This entire class basically got refactored to Core.Entity
      * not sure if it was a good idea...
@@ -20,6 +20,7 @@ namespace aedit.Classes.UI {
         /*
          * Used by UIElements to inflate the hitbox for sloppy selection
          */
+        public int alwaysSort = 0;
         public UIElement()
         {
             hitboxPadding = new Vector2(4, 4);

@@ -51,6 +51,10 @@ namespace aedit.Classes.UI {
             mouseSprite.depth = 1f;
             AddChild(mouseSprite);
 
+            Edit_NewMapWin m = new Edit_NewMapWin(Vector2.Zero);
+            m.position = aedit3.root.center - m.Size / 2;
+            AddChild(m);
+
             Sort();
         }
         /**
@@ -85,7 +89,7 @@ namespace aedit.Classes.UI {
             if (isMousePressed() > 0) {
                 for (int i = 0; i < windows.Count; i++) {
                     if (windows[windows.Count - i - 1].HitTest(mousePos)) {
-                        windows[windows.Count - i - 1].mousePressedCallback(mousePos, this);
+                        windows[windows.Count - i - 1].mousePressedCallback(mousePos, this, isMousePressed());
                         break;
                     }
                 }
@@ -103,6 +107,13 @@ namespace aedit.Classes.UI {
          * Important override for addchild, to detect window for sorting
          * this is NOT the best way to do it
          */
+        public override void RemoveChild(Entity child) {
+            UIWindow win = child as UIWindow;
+            if (win != null) {
+                windows.Remove((UIWindow)child);
+            }
+            base.RemoveChild(child);
+        }
         public override void AddChild(Entity child) {
             UIWindow win = child as UIWindow;
             if (win != null) {

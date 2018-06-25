@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static aedit.Classes.Core.PaletteManager;
 
 namespace aedit.Classes.UI {
     public class UITilingRect : UIElement {
@@ -40,7 +41,7 @@ namespace aedit.Classes.UI {
                           tex,
                           GlobalPosition + offset,
                           r,
-                          Color.White,
+                          pal,
                           0,
                           Vector2.Zero,
                           Vector2.One,

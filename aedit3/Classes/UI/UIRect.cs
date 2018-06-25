@@ -32,7 +32,7 @@ namespace aedit.Classes.UI
         };
         public static UIRectDefinition DefaultWindow = new UIRectDefinition() {
             tex = "ui",
-            srcrect = new Rectangle(0, 0, 24, 32),
+            srcrect = new Rectangle(0, 33, 24, 31),
             cornerSize = new Point(11, 13)
         };
         private Point StartingCornerSize;    //needed for resetting the size
@@ -140,7 +140,7 @@ namespace aedit.Classes.UI
                     b.Draw(tex,
                           dstPositions[i]+GlobalPosition,
                           srcRects[i],
-                          Color.White,
+                          pal,
                           0,
                           Vector2.Zero,
                           GetScale(i),

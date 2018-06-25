@@ -66,8 +66,7 @@ namespace aedit.Classes.UI {
         /**
          * Callback functions.. may need to refactor?
          */
-        virtual public void closePressed_func(Vector2 pos, object obj) {
-            mouse = root.isMousePressed();
+        virtual public void closePressed_func(Vector2 pos, object obj, int mouse) {
             UIButton but = (UIButton)obj;
             if (mouse == 1) {
                 but.state = UIButtonState.Pressed;
@@ -78,8 +77,7 @@ namespace aedit.Classes.UI {
         /**
          * Callback functions.. may need to refactor?
          */
-        virtual public void menuPressed_func(Vector2 pos, object obj) {
-            mouse = root.isMousePressed();
+        virtual public void menuPressed_func(Vector2 pos, object obj, int mouse) {
             if (mouse == 1) {
                 state = UIWindowState.Dragging;
                 mouseOffset = GlobalPosition - pos;
@@ -89,18 +87,18 @@ namespace aedit.Classes.UI {
         /**
          * Callback functions.. may need to refactor?
          */
-        virtual public void mousePressed_func(Vector2 pos, object obj) {
-            mouse = root.isMousePressed();
+        virtual public void mousePressed_func(Vector2 pos, object obj, int mouse) {
             Vector2 mousePos = root.mousePos;
             if (mouse > 0) {
                 foreach (UIElement b in children) {
                     if (b.HitTest(mousePos) && b.mousePressedCallback != null) {
-                        b.mousePressedCallback(mousePos, b);
+                        b.mousePressedCallback(mousePos, b, mouse);
                         break;
                     }
                 }
                 if (mouse == 1) {
                     UITextInput.TestActiveTextInput(this);
+                    if(alwaysSort == 0)
                     depth = 2;
                     root.Sort();
                 }

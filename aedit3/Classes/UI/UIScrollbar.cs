@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using static aedit.Classes.UI.UIManager;
+using static aedit.Classes.Core.PaletteManager;
 namespace aedit.Classes.UI {
     public enum UIScrollbarDir {
         Vertical,
@@ -44,8 +45,11 @@ namespace aedit.Classes.UI {
         public static UIButtonDef ScrollButtonLeft = new UIButtonDef() {
             type = ButtonType.Static,
             srcRect = new Rectangle(64, 16, 11, 10),
-            pressedOffset = new Point(0, 10)
+            pressedOffset = new Point(0, 10),
+            pal = Palette(0, 0, 0)
         };
+        
+
         public static UIButtonDef ScrollButtonCenter2 = new UIButtonDef() {
             type = ButtonType.Dynamic,
             srcRect = new Rectangle(75, 16, 9, 10),
@@ -55,17 +59,20 @@ namespace aedit.Classes.UI {
         public static UIButtonDef ScrollButtonRight = new UIButtonDef() {
             type = ButtonType.Static,
             srcRect = new Rectangle(84, 16, 11, 10),
-            pressedOffset = new Point(0, 10)
+            pressedOffset = new Point(0, 10),
+            pal = Palette(0, 0, 0)
         };
         public static UIButtonDef ScrollButtonUp = new UIButtonDef() {
             type = ButtonType.Static,
             srcRect = new Rectangle(40, 16, 11, 10),
-            pressedOffset = new Point(12, 0)
+            pressedOffset = new Point(12, 0),
+            pal = Palette(0, 0, 0)
         };
         public static UIButtonDef ScrollButtonDown = new UIButtonDef() {
             type = ButtonType.Static,
             srcRect = new Rectangle(40, 36, 11, 10),
-            pressedOffset = new Point(12, 0)
+            pressedOffset = new Point(12, 0),
+            pal = Palette(0, 0, 0)
         };
         public static UIButtonDef ScrollButtonCenter = new UIButtonDef() {
             type = ButtonType.Dynamic,
@@ -204,24 +211,23 @@ namespace aedit.Classes.UI {
         /*
          * Callback Functions
          */
-        void pressCenter(Vector2 pos, object obj) {
+        void pressCenter(Vector2 pos, object obj, int mouse) {
             UIButton button = obj as UIButton;
-            if (root.isMousePressed() == 1) {
+            if (mouse == 1) {
                 if (button != null) {
                     mouseOffset = pos - button.position;
-                    button.DefaultButtonCallback(pos, obj);
+                    button.DefaultButtonCallback(pos, obj, mouse);
                 }
             }
         }
         /*
          * Callback Functions
          */
-        void mousePress(Vector2 pos, object obj) {
-            int mouse = root.isMousePressed();
+        void mousePress(Vector2 pos, object obj, int mouse) {
             Vector2 mousePos = root.mousePos;
             for (int i = 0; i < children.Count(); i++) {
                 if (children[i].HitTest(mousePos) && children[i].mousePressedCallback != null) {
-                    children[i].mousePressedCallback(pos, children[i]);
+                    children[i].mousePressedCallback(pos, children[i], mouse);
                 }
             }
         }

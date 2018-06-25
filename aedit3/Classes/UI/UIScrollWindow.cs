@@ -41,7 +41,6 @@ namespace aedit.Classes.UI {
             DownScrollbar.Ratio = 0.5f;
         }
         public override void Update() {
-            label.text = RightScrollbar.Ratio.ToString("N2");
             base.Update();
         }
     }

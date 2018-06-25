@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using aedit.Classes.UI;
 using aedit.Classes.Core;
 using aedit.Classes.Ex;
-
+using static aedit.Classes.Core.PaletteManager;
 namespace aedit
 {
     /// <summary>
@@ -17,6 +17,13 @@ namespace aedit
     /// </summary>
     public class aedit3 : Game
     {
+        public Vector2 center {
+            get {
+                Vector2 c = new Vector2(graphics.PreferredBackBufferWidth/2, graphics.PreferredBackBufferHeight/2);
+                
+                return Vector2.Transform(c, Matrix.Invert(gameScale));
+            }
+        }
         public static Matrix gameScale = Matrix.CreateScale(2, 2, -1) * Matrix.CreateTranslation(new Vector3(0, 0, 1));
         public static aedit3 root;
         public GraphicsDeviceManager graphics;
@@ -41,7 +48,7 @@ namespace aedit
                 
             };
             Window.IsBorderless = true;
-            
+            Palette(9, 0, 0);
             Content.RootDirectory = "Content";
         }
         /// <summary>
@@ -110,6 +117,7 @@ namespace aedit
             effect = Content.Load<Effect>("shaders/shader_basic");
             effect.Parameters["Palette"].SetValue( Content.Load<Texture2D>("palette"));
             uiEffect = Content.Load<Effect>("shaders/shader_ui");
+            uiEffect.Parameters["Palette"].SetValue(Content.Load<Texture2D>("palette"));
         }
 
         /// <summary>

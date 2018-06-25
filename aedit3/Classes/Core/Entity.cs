@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static aedit.Classes.Core.PaletteManager;
 
 namespace aedit.Classes.Core
 {
     abstract public class Entity
     {
-
+        public Color pal = Palette(0,0,0);
         public bool debug = false;
         public static Texture2D whitePixel;
         public bool visible = true;
@@ -112,8 +113,11 @@ namespace aedit.Classes.Core
             }
             return false;
         }
-        virtual public void AddChild(Entity child)
-        {
+        virtual public void RemoveChild(Entity child) {
+            children.Remove(child);
+            child.parent = null;
+        }
+        virtual public void AddChild(Entity child)        {
             children.Add(child);
             child.parent = this;
         }

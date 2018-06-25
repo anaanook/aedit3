@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using static aedit.Classes.Core.PaletteManager;
 namespace aedit.Classes.UI
 {
     /**
@@ -43,7 +43,7 @@ namespace aedit.Classes.UI
                 font.DrawString(text, GlobalPosition, b, DrawDepth, color);
                 if (dropShadow)
                 {
-                    font.DrawString(text, GlobalPosition+shadowDir, b, DrawDepth-0.005f, shadowColor);
+                    font.DrawString(text, GlobalPosition+shadowDir, b, DrawDepth-0.005f, Palette(0,-3,0));
                 }
             }
         }
