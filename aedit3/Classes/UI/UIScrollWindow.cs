@@ -7,8 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace aedit.Classes.UI {
+    /*
+     * This is a uiwindow with scrollbars
+     **/
     class UIScrollWindow : UIWindow {
-        //UITilingRect piss;
         public override Vector2 Size {
             get => base.Size;
             set {
@@ -32,6 +34,9 @@ namespace aedit.Classes.UI {
             AddChild(DownScrollbar);
             UpdateScrollbars();
         }
+        /*
+         * This is a function that puts the scrollbars to the edge of the window
+         */
         public void UpdateScrollbars() {
             RightScrollbar.position = new Vector2(Size.X - RightScrollbar.Size.X  , menubar.Size.Y +1);
             RightScrollbar.length = (int)(Size.Y - menubar.Size.Y - cornerTile.Y);
